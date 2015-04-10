@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="rivets">
+  <name>Rivets</name>
+  <publisher>Xamarin</publisher>
+  <publisher-url>http://xamarin.com</publisher-url>
+  <version>1.0.5.1</version>
+  <summary>Rivets is a C# implementation of App Links. It's functionally a port of Bolts, the Java/Obj-C implementation.</summary>
+  <samples>
+    <sample id="RivetsSampleAndroid">
+      <name>Rivets Sample - Android</name>
+      <summary>Rivets Sample - Android</summary>
+    </sample>
+    <sample id="RivetsSampleiPhone">
+      <name>Rivets Sample - iOS Unified API</name>
+      <summary>Rivets Sample - iOS Unified API</summary>
+    </sample>
+    <sample id="RivetsSampleiPhone-Classic">
+      <name>Rivets Sample - iOS Classic API</name>
+      <summary>Rivets Sample - iOS Classic API</summary>
+    </sample>
+    <sample id="RivetsSampleWinPhone8">
+      <name>Rivets Sample - Windows Phone 8</name>
+      <summary>Rivets Sample - Windows Phone 8</summary>
+    </sample>
+  </samples>
+</component>

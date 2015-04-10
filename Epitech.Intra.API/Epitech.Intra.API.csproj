@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{8C67B50E-A9B2-4F24-9F82-F05D4303DC5B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Epitech.Intra.API</RootNamespace>
+    <AssemblyName>Epitech.Intra.API</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Calendar.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\Modules.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Token.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserMarks.cs" />
+    <Compile Include="Models\Welcome.cs" />
+    <Compile Include="Models\[Calendar] Types\ProfInst.cs" />
+    <Compile Include="Models\[Calendar] Types\Room.cs" />
+    <Compile Include="Models\[Event] Types\Room.cs" />
+    <Compile Include="Models\[Marks] Types\Module.cs" />
+    <Compile Include="Models\[Marks] Types\Note.cs" />
+    <Compile Include="Models\[Project] Types\Master.cs" />
+    <Compile Include="Models\[Project] Types\Member.cs" />
+    <Compile Include="Models\[Project] Types\Notregistered.cs" />
+    <Compile Include="Models\[Project] Types\Registered.cs" />
+    <Compile Include="Models\[Project] Types\Url.cs" />
+    <Compile Include="Models\[User] Types\AverageGPA.cs" />
+    <Compile Include="Models\[User] Types\Email.cs" />
+    <Compile Include="Models\[User] Types\Gpa.cs" />
+    <Compile Include="Models\[User] Types\Group.cs" />
+    <Compile Include="Models\[User] Types\Nsstat.cs" />
+    <Compile Include="Models\[User] Types\Rights.cs" />
+    <Compile Include="Models\[User] Types\Telephone.cs" />
+    <Compile Include="Models\[User] Types\Userinfo.cs" />
+    <Compile Include="Models\[Welcome] Types\Activite.cs" />
+    <Compile Include="Models\[Welcome] Types\Board.cs" />
+    <Compile Include="Models\[Welcome] Types\Current.cs" />
+    <Compile Include="Models\[Welcome] Types\History.cs" />
+    <Compile Include="Models\[Welcome] Types\Infos.cs" />
+    <Compile Include="Models\[Welcome] Types\Module.cs" />
+    <Compile Include="Models\[Welcome] Types\Projet.cs" />
+    <Compile Include="Models\[Welcome] Types\Rights.cs" />
+    <Compile Include="Models\[Welcome] Types\Stage.cs" />
+    <Compile Include="Models\[Welcome] Types\User.cs" />
+    <Compile Include="APIIndex.cs" />
+    <Compile Include="Models\[User] Types\NetsoulRawData.cs" />
+    <Compile Include="Models\Trombi.cs" />
+    <Compile Include="Models\ActivityMark.cs" />
+    <Compile Include="Models\[Project] Types\Files.cs" />
+    <Compile Include="Models\ELearning.cs" />
+    <Compile Include="Models\Notification.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.1.4.1.6349\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.1.4.1.6349\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>

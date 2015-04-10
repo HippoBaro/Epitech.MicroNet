@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rivets</name>
+    </assembly>
+    <members>
+        <member name="P:Rivets.AppLink.SourceUrl">
+            <summary>
+            Url that the App Link originates from
+            </summary>
+            <value>The source URL.</value>
+        </member>
+        <member name="P:Rivets.AppLink.WebUrl">
+            <summary>
+            Web Url that the App Link should fall back to
+            </summary>
+            <value>The web URL.</value>
+        </member>
+        <member name="P:Rivets.AppLink.Targets">
+            <summary>
+            Mobile app Targets for the given Source Url
+            </summary>
+            <value>The targets.</value>
+        </member>
+        <member name="M:Rivets.IAppLinkNavigation.Navigate(Rivets.AppLink)">
+            <summary>
+            Navigates to the specified AppLink without first resolving AppLink MetaData from a page
+            </summary>
+            <param name="appLink">App Link.</param>
+        </member>
+        <member name="M:Rivets.IAppLinkNavigation.Navigate(System.Uri)">
+            <summary>
+            Navigate the specified url.
+            </summary>
+            <param name="url">URL.</param>
+        </member>
+    </members>
+</doc>
