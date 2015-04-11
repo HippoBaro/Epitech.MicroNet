@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Epitech.Intra.SharedApp.Views
 {
@@ -70,7 +71,13 @@ namespace Epitech.Intra.SharedApp.Views
 		}
 	}
 
-	public class Disconnection : IntraPage { }
+	public class Disconnection : IntraPage
+	{
+		public override async Task<object> SilentUpdate (string param)
+		{
+			return null;
+		}
+	}
 
 	public class RootMaster : MasterDetailPage
 	{
@@ -109,7 +116,7 @@ namespace Epitech.Intra.SharedApp.Views
 				Image = "MenuIcons/elearning.png",
 				Description = "« Mèdeis ageômetrètos eisitô mou tèn stegèn »"
 			});
-			MenuTabs.Add (new Tab ("A propos", typeof(Informarions)) {
+			MenuTabs.Add (new Tab ("A propos", typeof(Informations)) {
 				Image = "MenuIcons/info.png",
 				Description = "En savoir plus"
 			});
@@ -211,9 +218,6 @@ namespace Epitech.Intra.SharedApp.Views
 		{
 			this.Name = name;
 			this.PageType = page;
-
-			if (PageType == typeof(Disconnection))
-				return;
 
 			if (PageType == typeof(Profile)) {
 				string[] profilearg = new string[1];

@@ -93,7 +93,10 @@ namespace Epitech.Intra.SharedApp.Views
 					VerticalOptions = LayoutOptions.FillAndExpand,
 					IsEnabled = false,
 				};
-				listView.GestureRecognizers.Clear ();
+				listView.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+					if (e.SelectedItem != null)
+						listView.SelectedItem = null;
+				};
 				Content = listView;
 			} else {
 				Content = new FilesHeader (this, project);

@@ -96,7 +96,6 @@ namespace Epitech.Intra.iOS
 					completionHandler (UIBackgroundFetchResult.NewData);
 					return;
 				}
-
 			} catch (Exception ex) {
 				Insights.Report (ex);
 				completionHandler (UIBackgroundFetchResult.Failed);

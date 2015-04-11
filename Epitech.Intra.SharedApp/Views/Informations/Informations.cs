@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Epitech.Intra.SharedApp
 {
-	public class Informarions : IntraPage
+	public class Informations : IntraPage
 	{
 		public override async System.Threading.Tasks.Task<object> SilentUpdate (string param)
 		{
@@ -12,7 +12,7 @@ namespace Epitech.Intra.SharedApp
 			return null;
 		}
 
-		public Informarions ()
+		public Informations ()
 		{
 			Image Applogo = new Image () {
 				Source = ImageSource.FromFile ("logo_blue.png"),

@@ -101,6 +101,7 @@ namespace Epitech.Intra.SharedApp.Views
 			Title = ((User)Data).Title;
 
 			if (TargetUser != App.API.login) {
+				ToolbarItems.Clear ();
 				ToolbarItems.Add (new ToolbarItem ("Email", null, new Action (delegate {
 					Device.OpenUri (new Uri ("mailto:" + ((User)Data).InternalEmail));
 				}), 0, 0));
