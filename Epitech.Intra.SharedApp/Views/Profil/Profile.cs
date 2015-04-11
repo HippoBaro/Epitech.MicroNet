@@ -119,8 +119,6 @@ namespace Epitech.Intra.SharedApp.Views
 				}
 			};
 
-			Array.Reverse (((User)Data).Marks.Modules);
-
 			if (((User)Data).Marks.Modules.Length != 0) {
 				ListView listView = new ListView {
 					VerticalOptions = LayoutOptions.FillAndExpand,

@@ -65,6 +65,7 @@
     <Compile Include="Views\Common\MenuHeader.cs" />
     <Compile Include="Miscs\Security.cs" />
     <Compile Include="Epitech.Intra.SharedApp.cs" />
+    <Compile Include="Views\Informations\Informarions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -115,19 +116,20 @@
     <Folder Include="Views\Profil\Marks\" />
     <Folder Include="Miscs\" />
     <Folder Include="CustomRenderer\" />
+    <Folder Include="Views\Informations\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Desktop\oxyplot\Source\OxyPlot\OxyPlot.csproj">
-      <Project>{7A0B35C0-DD17-4964-8E9A-44D6CECDC692}</Project>
-      <Name>OxyPlot</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Desktop\oxyplot\Source\OxyPlot.Xamarin.Forms\OxyPlot.Xamarin.Forms.csproj">
-      <Project>{B63C5F8C-61C8-4E69-93D6-F49F816D3746}</Project>
-      <Name>OxyPlot.Xamarin.Forms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Epitech.Intra.API\Epitech.Intra.API.csproj">
       <Project>{8C67B50E-A9B2-4F24-9F82-F05D4303DC5B}</Project>
       <Name>Epitech.Intra.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\oxyplot\Source\OxyPlot\OxyPlot.csproj">
+      <Project>{7A0B35C0-DD17-4964-8E9A-44D6CECDC692}</Project>
+      <Name>OxyPlot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\oxyplot\Source\OxyPlot.Xamarin.Forms\OxyPlot.Xamarin.Forms.csproj">
+      <Project>{B63C5F8C-61C8-4E69-93D6-F49F816D3746}</Project>
+      <Name>OxyPlot.Xamarin.Forms</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

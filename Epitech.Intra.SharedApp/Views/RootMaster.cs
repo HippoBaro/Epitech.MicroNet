@@ -46,6 +46,10 @@ namespace Epitech.Intra.SharedApp.Views
 				Text = element.Name,
 			};
 
+			if (name.Text == "Déconnexion") {
+				name.TextColor = Color.FromHex ("FF8080");
+			}
+
 			Label desc = new Label () {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
@@ -105,9 +109,13 @@ namespace Epitech.Intra.SharedApp.Views
 				Image = "MenuIcons/elearning.png",
 				Description = "« Mèdeis ageômetrètos eisitô mou tèn stegèn »"
 			});
+			MenuTabs.Add (new Tab ("A propos", typeof(Informarions)) {
+				Image = "MenuIcons/info.png",
+				Description = "En savoir plus"
+			});
 			MenuTabs.Add (new Tab ("Déconnexion", typeof(Disconnection)) {
-				Image = "MenuIcons/profile.png",
-				Description = "« Quelqu'un est jaloux et veux tester l'app ? »"
+				Image = "MenuIcons/disconnect.png",
+				Description = "Quelqu'un est jaloux et veux tester l'app ?"
 			});
 
 			listView = new ListView {

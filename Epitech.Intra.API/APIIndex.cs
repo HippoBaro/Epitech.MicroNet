@@ -199,10 +199,10 @@ namespace Epitech.Intra.API
 				return null;
 			try {
 				user.Marks = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.UserMarks> (await result.Content.ReadAsStringAsync ());
+				Array.Reverse (user.Marks.Modules);
 			} catch {
 				user.Marks = null;
 			}
-
 			return user;
 		}
 
