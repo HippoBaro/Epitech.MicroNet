@@ -18,43 +18,48 @@ namespace Epitech.Intra.iOS
 		public static EKEventStore eventStore;
 		const string CalendarIDKey = "CalendarIdForEventSynch";
 
-		public static EKCalendar Calendar {
+		public EKCalendar Calendar {
 			get {
 				string val = NSUserDefaults.StandardUserDefaults.StringForKey (CalendarIDKey); 
 				if (val == null) {
-					NSError err;
-					EKCalendar cal = EventKit.EKCalendar.Create (EKEntityType.Event, eventStore);
-					cal.Title = "Evènements Epitech";
-					foreach (EKSource s in eventStore.Sources) {
-						if (s.SourceType == EKSourceType.CalDav) {
-							cal.Source = s;
-							break;
-						}
-					}
-					if (cal.Source == null) {
-						foreach (EKSource s in eventStore.Sources) {
-							if (s.SourceType == EKSourceType.Local) {
-								cal.Source = s;
-								break;
-							}
-						}
-					}
-					bool didwell = eventStore.SaveCalendar (cal, true, out err);
-					if (!didwell)
-						throw new Exception ("SaveCalendar failed");
-					else {
-						NSUserDefaults.StandardUserDefaults.SetString (cal.CalendarIdentifier, CalendarIDKey);
-						NSUserDefaults.StandardUserDefaults.Synchronize ();
-					}
-					return cal;
+					return CreateNewCalendar ();
 				} else {
 					foreach (var item in eventStore.Calendars) {
 						if (item.CalendarIdentifier == val)
 							return item;
 					}
-					throw new Exception ("Calendar not found");
+					return CreateNewCalendar ();
 				}
 			}
+		}
+
+		private EKCalendar CreateNewCalendar()
+		{
+			NSError err;
+			EKCalendar cal = EventKit.EKCalendar.Create (EKEntityType.Event, eventStore);
+			cal.Title = "Evènements Epitech";
+			foreach (EKSource s in eventStore.Sources) {
+				if (s.SourceType == EKSourceType.CalDav) {
+					cal.Source = s;
+					break;
+				}
+			}
+			if (cal.Source == null) {
+				foreach (EKSource s in eventStore.Sources) {
+					if (s.SourceType == EKSourceType.Local) {
+						cal.Source = s;
+						break;
+					}
+				}
+			}
+			bool didwell = eventStore.SaveCalendar (cal, true, out err);
+			if (!didwell)
+				throw new Exception ("SaveCalendar failed");
+			else {
+				NSUserDefaults.StandardUserDefaults.SetString (cal.CalendarIdentifier, CalendarIDKey);
+				NSUserDefaults.StandardUserDefaults.Synchronize ();
+			}
+			return cal;
 		}
 
 		public async Task SynchrosizeCalendar (List<Calendar> events)

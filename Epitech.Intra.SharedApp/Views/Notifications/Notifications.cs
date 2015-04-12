@@ -65,7 +65,6 @@ namespace Epitech.Intra.SharedApp.Views
 				root.BackgroundColor = IntraColor.LightBlue;
 
 			View = root;
-
 		}
 	}
 

@@ -14,6 +14,8 @@ namespace Epitech.Intra.SharedApp
 
 		public Informations ()
 		{
+			Title = "A propos";
+
 			Image Applogo = new Image () {
 				Source = ImageSource.FromFile ("logo_blue.png"),
 				HeightRequest = 100,
