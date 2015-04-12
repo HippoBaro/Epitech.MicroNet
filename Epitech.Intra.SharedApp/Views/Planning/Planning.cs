@@ -12,7 +12,7 @@ namespace Epitech.Intra.SharedApp.Views
 {
 	public interface IEventManager_iOS
 	{
-		Task SynchrosizeCalendar (List<Calendar> events);
+		void SynchrosizeCalendar (List<Calendar> events);
 	}
 
 	public class Planning : IntraPage

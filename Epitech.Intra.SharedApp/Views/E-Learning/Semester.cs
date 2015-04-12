@@ -8,7 +8,7 @@ namespace Epitech.Intra.SharedApp.Views
 {
 	public class Semester : IntraPage
 	{
-		public Semester()
+		public Semester ()
 		{
 			InitIntraPage (typeof(Semester), App.API.GetELearning);
 		}
@@ -17,7 +17,8 @@ namespace Epitech.Intra.SharedApp.Views
 		{
 			base.OnAppearing ();
 
-			await RefreshData (false);
+			if (Content == null)
+				await RefreshData (false);
 		}
 
 		public override void DisplayContent (object Data)
@@ -33,7 +34,13 @@ namespace Epitech.Intra.SharedApp.Views
 						{ TextCell.DetailProperty, new Binding ("InnerCount") { StringFormat = "{0} Modules disponible" } }
 					}
 				},
-				ItemsSource = ((List<API.Data.ELearning>)Data)
+				ItemsSource = ((List<API.Data.ELearning>)Data),
+				IsPullToRefreshEnabled = true
+			};
+
+			list.Refreshing += async (object sender, EventArgs e) => {
+				await RefreshData (true);
+				list.IsRefreshing = false;
 			};
 
 			list.ItemSelected += async (object sender, SelectedItemChangedEventArgs e) => {

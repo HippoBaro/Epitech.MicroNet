@@ -1,17 +1,12 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace Epitech.Intra.SharedApp
 {
 	public class Informations : IntraPage
 	{
-		public override async System.Threading.Tasks.Task<object> SilentUpdate (string param)
-		{
-			// Do nothing.
-			return null;
-		}
-
 		public Informations ()
 		{
 			Title = "A propos";

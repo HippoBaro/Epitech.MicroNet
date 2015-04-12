@@ -44,24 +44,26 @@ namespace Epitech.Intra.SharedApp
 
 		public virtual async Task<object> SilentUpdate (string param)
 		{
-			try {
-				if (FunctionHasParam) {
-					if (param != null && FunctionWithParam != null) {
-						Data = await FunctionWithParam (param);
-						LastUpdate = DateTime.Now;
+			if (Function != null || FunctionWithParam != null)
+				try {
+					if (FunctionHasParam) {
+						if (param != null && FunctionWithParam != null) {
+							Data = await FunctionWithParam (param);
+							LastUpdate = DateTime.Now;
+						}
+					} else {
+						if (Function != null) {
+							Data = await Function ();
+							LastUpdate = DateTime.Now;
+						}
 					}
-				} else {
-					if (Function != null) {
-						Data = await Function ();
-						LastUpdate = DateTime.Now;
+					if (Type == typeof(Planning)) {
+						DependencyService.Get<IEventManager_iOS> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => x.Past == false && x.EventRegistered != null));
 					}
+				} catch (Exception ex) {
+					Insights.Report (ex);
+					throw ex;
 				}
-				if (Type == typeof(Planning))
-					DependencyService.Get<IEventManager_iOS> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => x.Past == false && x.EventRegistered != null));
-			} catch (Exception ex) {
-				Insights.Report (ex);
-				throw ex;
-			}
 			return Data;
 		}
 
@@ -110,8 +112,17 @@ namespace Epitech.Intra.SharedApp
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-					new Image () { Source = ImageSource.FromFile("404.jpg"), HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Fill },
-					new Label () { Text = ex.Message, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Center, XAlign = TextAlignment.Center }
+					new Image () {
+						Source = ImageSource.FromFile ("404.jpg"),
+						HorizontalOptions = LayoutOptions.Fill,
+						VerticalOptions = LayoutOptions.Fill
+					},
+					new Label () {
+						Text = ex.Message,
+						HorizontalOptions = LayoutOptions.Center,
+						VerticalOptions = LayoutOptions.Center,
+						XAlign = TextAlignment.Center
+					}
 				}
 			};
 			Insights.Report (ex);

@@ -58,7 +58,7 @@ namespace Epitech.Intra.SharedApp.Views
 						HorizontalOptions = LayoutOptions.Start,
 						VerticalOptions = LayoutOptions.CenterAndExpand,
 						FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
-						Text = "Temps restant : " + timerest.Days + " j, " + timerest.Hours + " h et " + timerest.Minutes + " mim"
+						Text = ( proj.End > DateTime.Now ) ? "Temps restant : " + timerest.Days + " j, " + timerest.Hours + " h et " + timerest.Minutes + " mim" : "Projet terminé le : " + proj.Begin.ToString()
 					},
 				}
 			};

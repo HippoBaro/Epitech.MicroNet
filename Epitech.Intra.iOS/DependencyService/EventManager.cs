@@ -62,7 +62,7 @@ namespace Epitech.Intra.iOS
 			return cal;
 		}
 
-		public async Task SynchrosizeCalendar (List<Calendar> events)
+		public async void SynchrosizeCalendar (List<Calendar> events)
 		{
 			try {
 				await Task.Factory.StartNew (new Action (() => {

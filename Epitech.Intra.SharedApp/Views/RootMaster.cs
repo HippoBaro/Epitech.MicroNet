@@ -71,13 +71,7 @@ namespace Epitech.Intra.SharedApp.Views
 		}
 	}
 
-	public class Disconnection : IntraPage
-	{
-		public override async Task<object> SilentUpdate (string param)
-		{
-			return null;
-		}
-	}
+	public class Disconnection : IntraPage { }
 
 	public class RootMaster : MasterDetailPage
 	{
@@ -86,12 +80,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 		public RootMaster ()
 		{ 
-			this.IsPresented = false;
-			if (Device.Idiom == TargetIdiom.Phone)
-				this.MasterBehavior = MasterBehavior.SplitOnLandscape;
-			else
-				this.MasterBehavior = MasterBehavior.Split;
-
+			MenuTabs.Clear ();
 			MenuTabs.Add (new Tab ("Profil", typeof(Profile)) {
 				Image = "MenuIcons/profile.png",
 				Description = "Me, Myself and I"
@@ -124,32 +113,18 @@ namespace Epitech.Intra.SharedApp.Views
 				Image = "MenuIcons/disconnect.png",
 				Description = "Quelqu'un est jaloux et veux tester l'app ?"
 			});
-
-			listView = new ListView {
-				ItemTemplate = new DataTemplate (typeof(MenuCell)),
-				SeparatorVisibility = SeparatorVisibility.None,
-				ItemsSource = MenuTabs,
-				VerticalOptions = LayoutOptions.Start,
-				BackgroundColor = Color.Transparent,
-				HasUnevenRows = true,
-			};
+			this.IsPresented = false;
+			if (Device.Idiom == TargetIdiom.Phone)
+				this.MasterBehavior = MasterBehavior.SplitOnLandscape;
+			else
+				this.MasterBehavior = MasterBehavior.Split;
 
 			this.Master = new ContentPage {
 				BackgroundColor = IntraColor.DarkGray,
 				Title = "Menu",
-				Icon = new FileImageSource () { File = "menu24.png" },
-				Content = listView
+				Icon = new FileImageSource () { File = "menu24.png" }
 			};
-
-			listView.ItemSelected += (sender, args) => {
-				if (args.SelectedItem == null)
-					return;
-				this.Detail = ((Tab)listView.SelectedItem).Nav;
-				listView.SelectedItem = null;
-				if (Device.Idiom == TargetIdiom.Phone)
-					this.IsPresented = false;
-			};
-			listView.SelectedItem = MenuTabs [0];
+			this.Detail = new Page();
 		}
 
 		private async void Disconnect ()
@@ -159,7 +134,7 @@ namespace Epitech.Intra.SharedApp.Views
 			if (action == "Me déconnecter") {
 				this.IsPresented = false;
 				App.API.ForgetCredit ();
-				DependencyService.Get<Security.ISecurity> ().DeleteItemAsync ();
+				await DependencyService.Get<Security.ISecurity> ().DeleteItemAsync ();
 				((App)App.Current).IsUserConnected = false;
 				((App)App.Current).UserLogin = null;
 				((App)App.Current).User = null;
@@ -167,7 +142,8 @@ namespace Epitech.Intra.SharedApp.Views
 			}
 		}
 
-		public void DrawMenu() {
+		public void DrawMenu()
+		{	
 			listView = new ListView {
 				ItemTemplate = new DataTemplate (typeof(MenuCell)),
 				SeparatorVisibility = SeparatorVisibility.None,
@@ -191,6 +167,8 @@ namespace Epitech.Intra.SharedApp.Views
 				if (Device.Idiom == TargetIdiom.Phone)
 					this.IsPresented = false;
 			};
+
+			listView.SelectedItem = MenuTabs [0];
 
 			this.Master = new ContentPage {
 				BackgroundColor = IntraColor.DarkGray,

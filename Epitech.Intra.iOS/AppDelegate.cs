@@ -18,8 +18,6 @@ namespace Epitech.Intra.iOS
 	{
 		App MainApp;
 
-		public static AppDelegate Current;
-
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			Forms.Init ();
@@ -27,7 +25,6 @@ namespace Epitech.Intra.iOS
 			UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
 
 			MainApp = new App ();
-			Current = this;
 
 			LoadApplication (MainApp);
 
@@ -84,15 +81,18 @@ namespace Epitech.Intra.iOS
 		{
 			try {
 				if (MainApp != null && MainApp.IsUserConnected == true) {
-					foreach (var item in RootMaster.MenuTabs) {
-						if (item.PageType == typeof(Profile))
-							await item.Page.SilentUpdate (MainApp.UserLogin);
+					var handle = Insights.TrackTime ("TimeToFetch");
+					handle.Start ();
+					foreach (var item in RootMaster.MenuTabs ) {
+						if (item.PageType == typeof(Profile) || item.PageType == typeof(ELearning) || item.PageType == typeof(Projets))
+							continue;
 						else if (item.PageType == typeof(Notifications)) {
 							await ((Notifications)item.Page).SilentUpdateForNotification (null);
 							FireNotification (((Notifications)item.Page).News);
 						} else
 							await item.Page.SilentUpdate (null);
 					}
+					handle.Stop();
 					completionHandler (UIBackgroundFetchResult.NewData);
 					return;
 				}

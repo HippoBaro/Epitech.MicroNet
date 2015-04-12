@@ -10,6 +10,8 @@ namespace Epitech.Intra.SharedApp.Views
 		{
 			Padding = new Thickness (5, 20, 5, 0);
 			Spacing = 10;
+			HorizontalOptions = LayoutOptions.Center;
+			VerticalOptions = LayoutOptions.Center;
 			Children.Add (new ActivityIndicator () {
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
@@ -17,7 +19,7 @@ namespace Epitech.Intra.SharedApp.Views
 				IsVisible = true,
 				IsRunning = true,
 				IsEnabled = true,
-				Scale = 1
+				Scale = 1.5
 			});
 		}
 	}
