@@ -75,7 +75,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 		public Notifications ()
 		{
-			InitIntraPage (typeof(Notifications), App.API.GetNotifications);
+			InitIntraPage (typeof(Notifications), App.API.GetNotifications, TimeSpan.Zero);
 		}
 
 		protected override async void OnAppearing ()

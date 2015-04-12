@@ -11,8 +11,8 @@ namespace Epitech.Intra.SharedApp
 {
 	public class IntraPage : ContentPage
 	{
-		private const int DataInvalidationinHour = 1;
 		private DateTime LastUpdate;
+		private TimeSpan DataInvalidation;
 		private Type Type;
 		public object Data;
 
@@ -22,21 +22,23 @@ namespace Epitech.Intra.SharedApp
 
 		public bool IsDataInvalidated (DateTime time)
 		{
-			if (DateTime.Compare (time.AddHours (DataInvalidationinHour), DateTime.Now) < 0)
+			if (DateTime.Compare (time + DataInvalidation, DateTime.Now) < 0)
 				return true;
 			else
 				return false;
 		}
 
-		public void InitIntraPage (Type Type, Func<string, Task<object>> function, string dat)
+		public void InitIntraPage (Type Type, Func<string, Task<object>> function, TimeSpan DataInvalidation, string dat)
 		{
+			this.DataInvalidation = DataInvalidation;
 			this.Type = Type;
 			FunctionWithParam = function;
 			FunctionHasParam = true;
 		}
 
-		public void InitIntraPage (Type Type, Func<Task<object>> function)
+		public void InitIntraPage (Type Type, Func<Task<object>> function, TimeSpan DataInvalidation)
 		{
+			this.DataInvalidation = DataInvalidation;
 			this.Type = Type;
 			Function = function;
 			FunctionHasParam = false;

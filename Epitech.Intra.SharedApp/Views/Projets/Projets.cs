@@ -79,7 +79,7 @@ namespace Epitech.Intra.SharedApp.Views
 	{
 		public Projets()
 		{
-			InitIntraPage (typeof(Projets), App.API.GetProjects);
+			InitIntraPage (typeof(Projets), App.API.GetProjects, new TimeSpan(1, 0, 0));
 		}
 
 		protected override async void OnAppearing ()

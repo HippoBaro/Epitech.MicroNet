@@ -79,7 +79,7 @@ namespace Epitech.Intra.SharedApp.Views
 		public Profile (string user)
 		{
 			TargetUser = (user == null) ? App.API.login : user;
-			InitIntraPage (typeof(Profile), App.API.GetUser, TargetUser);
+			InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan(1, 0, 0), TargetUser);
 		}
 
 		protected override async void OnAppearing ()
@@ -89,7 +89,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 			TargetUser = (TargetUser == null) ? App.API.login : TargetUser;
 			if (TargetUser != null) {
-				InitIntraPage (typeof(Profile), App.API.GetUser, TargetUser);
+				InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan(1, 0, 0), TargetUser);
 				await RefreshData (false, TargetUser);
 			}
 		}

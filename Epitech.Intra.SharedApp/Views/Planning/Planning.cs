@@ -21,7 +21,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 		public Planning()
 		{
-			InitIntraPage (typeof(Planning), App.API.GetCalendar);
+			InitIntraPage (typeof(Planning), App.API.GetCalendar, new TimeSpan(1, 0, 0));
 		}
 
 		protected override async void OnAppearing ()

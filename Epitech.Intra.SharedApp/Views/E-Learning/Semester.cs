@@ -10,7 +10,7 @@ namespace Epitech.Intra.SharedApp.Views
 	{
 		public Semester ()
 		{
-			InitIntraPage (typeof(Semester), App.API.GetELearning);
+			InitIntraPage (typeof(Semester), App.API.GetELearning, new TimeSpan(5, 0, 0, 0));
 		}
 
 		protected override async void OnAppearing ()
