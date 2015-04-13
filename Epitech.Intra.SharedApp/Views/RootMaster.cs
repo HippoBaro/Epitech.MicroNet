@@ -81,6 +81,8 @@ namespace Epitech.Intra.SharedApp.Views
 		public void CreateChidrens()
 		{
 			MenuTabs.Clear ();
+			GC.Collect ();
+			GC.WaitForPendingFinalizers ();
 			MenuTabs.Add (new Tab ("Profil", typeof(Profile)) {
 				Image = "MenuIcons/profile.png",
 				Description = "Me, Myself and I"
@@ -143,9 +145,8 @@ namespace Epitech.Intra.SharedApp.Views
 				((App)App.Current).UserLogin = null;
 				((App)App.Current).User = null;
 				this.Detail = new Page ();
-				MenuTabs.Clear ();
 				GC.Collect ();
-				await ((App)App.Current).DisplayLoginScreen();
+				((App)App.Current).DisplayLoginScreen();
 			}
 		}
 

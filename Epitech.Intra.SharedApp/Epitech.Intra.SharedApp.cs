@@ -24,7 +24,7 @@ namespace Epitech.Intra.SharedApp
 		public static int ScreenWidth;
 		public static int ScreenHeight;
 
-		public async Task DisplayLoginScreen()
+		public async void DisplayLoginScreen()
 		{
 			Auth page = new Auth();
 			await root.Navigation.PushModalAsync(new NavigationPage(page), true);
@@ -58,19 +58,9 @@ namespace Epitech.Intra.SharedApp
 			MainPage = root = new RootMaster();
 		}
 
-		protected override async void OnStart ()
+		protected override void OnStart ()
 		{
-			await DisplayLoginScreen();
-		}
-
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
-
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
+			DisplayLoginScreen();
 		}
 	}
 }

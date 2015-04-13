@@ -80,6 +80,9 @@ namespace Epitech.Intra.SharedApp
 		{
 			int result = 0;
 
+			if (user.Marks == null)
+				return 0;
+			
 			foreach (var item in user.Marks.Modules) {
 				if (item.Grade == "-")
 					result += item.Credits;

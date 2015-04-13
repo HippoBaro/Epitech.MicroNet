@@ -120,7 +120,7 @@ namespace Epitech.Intra.SharedApp.Views
 				}
 			};
 
-			if (((User)Data).Marks.Modules.Length != 0) {
+			if (((User)Data).Marks != null && ((User)Data).Marks.Modules.Length != 0) {
 				ListView listView = new ListView {
 					VerticalOptions = LayoutOptions.FillAndExpand,
 					ItemTemplate = new DataTemplate (typeof(ModuleCell)),

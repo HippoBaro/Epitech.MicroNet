@@ -26,7 +26,7 @@ namespace Epitech.Intra.SharedApp.Views
 		{
 			base.OnAppearing ();
 			try {
-				SelectLoginMethodAuto();
+				SelectLoginMethodAuto ();
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}
@@ -88,18 +88,18 @@ namespace Epitech.Intra.SharedApp.Views
 				HorizontalOptions = LayoutOptions.Start
 			};
 
-			StackLayout EventProp = new StackLayout() {
+			StackLayout EventProp = new StackLayout () {
 				Padding = new Thickness (5, 10, 5, 10),
 				Orientation = StackOrientation.Horizontal,
 				Children = { EventSync, EventSyncText }
 			};
 
 			login.Completed += (object sender, EventArgs e) => {
-				pass.Focus();
+				pass.Focus ();
 			};
 
 			pass.Completed += (object sender, EventArgs e) => {
-				pass.Unfocus();
+				pass.Unfocus ();
 			};
 
 			Button ok = new Button {
@@ -109,8 +109,10 @@ namespace Epitech.Intra.SharedApp.Views
 				WidthRequest = 150
 			};
 			ok.Clicked += async (object sender, EventArgs e) => {
+				if (login.Text == null || pass.Text == null)
+					return;
 				((App)App.Current).UserHasActivatedEventSync = EventSync.IsToggled;
-				await TryConnect (new Security.Credit () { login = login.Text, password = pass.Text });
+				await TryConnect (new Security.Credit () { login = login.Text.Replace(" ", String.Empty), password = pass.Text.Replace(" ", String.Empty) });
 			};
 			Content = new StackLayout {
 				HorizontalOptions = LayoutOptions.Fill,

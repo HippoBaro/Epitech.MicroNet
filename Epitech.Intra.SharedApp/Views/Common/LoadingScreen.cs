@@ -15,11 +15,9 @@ namespace Epitech.Intra.SharedApp.Views
 			Children.Add (new ActivityIndicator () {
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
-				Color = Color.Navy,
 				IsVisible = true,
 				IsRunning = true,
 				IsEnabled = true,
-				Scale = 1.5
 			});
 		}
 	}
