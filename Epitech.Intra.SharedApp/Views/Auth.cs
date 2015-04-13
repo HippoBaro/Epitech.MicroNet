@@ -137,6 +137,7 @@ namespace Epitech.Intra.SharedApp.Views
 			if (!res)
 				return res;
 
+			((App)App.Current).root.CreateChidrens ();
 			var handle = Insights.TrackTime ("TimeToLogin");
 			handle.Start ();
 

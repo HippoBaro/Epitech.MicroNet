@@ -78,8 +78,8 @@ namespace Epitech.Intra.SharedApp.Views
 		public static List<Tab> MenuTabs = new List<Tab>();
 		public ListView listView;
 
-		public RootMaster ()
-		{ 
+		public void CreateChidrens()
+		{
 			MenuTabs.Clear ();
 			MenuTabs.Add (new Tab ("Profil", typeof(Profile)) {
 				Image = "MenuIcons/profile.png",
@@ -113,6 +113,10 @@ namespace Epitech.Intra.SharedApp.Views
 				Image = "MenuIcons/disconnect.png",
 				Description = "Quelqu'un est jaloux et veux tester l'app ?"
 			});
+		}
+
+		public RootMaster ()
+		{
 			this.IsPresented = false;
 			if (Device.Idiom == TargetIdiom.Phone)
 				this.MasterBehavior = MasterBehavior.SplitOnLandscape;
@@ -138,6 +142,9 @@ namespace Epitech.Intra.SharedApp.Views
 				((App)App.Current).IsUserConnected = false;
 				((App)App.Current).UserLogin = null;
 				((App)App.Current).User = null;
+				this.Detail = new Page ();
+				MenuTabs.Clear ();
+				GC.Collect ();
 				await ((App)App.Current).DisplayLoginScreen();
 			}
 		}

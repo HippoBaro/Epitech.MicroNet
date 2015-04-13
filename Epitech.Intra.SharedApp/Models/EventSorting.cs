@@ -30,7 +30,7 @@ namespace Epitech.Intra.SharedApp
 	{
 		public EventGroup (string grouptitle)
 		{
-			GroupTitle = grouptitle;
+			this.GroupTitle = grouptitle;
 		}
 
 		public string GroupTitle {

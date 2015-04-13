@@ -72,6 +72,7 @@ namespace Epitech.Intra.SharedApp.Views
 	{
 		List<Notification> LastNotifications = null;
 		public List<Notification> News =null;
+		ListView listview;
 
 		public Notifications ()
 		{
@@ -85,6 +86,7 @@ namespace Epitech.Intra.SharedApp.Views
 			Title = "Notifications";
 			await RefreshData (true);
 		}
+			
 
 		public async Task<object> SilentUpdateForNotification (string param)
 		{
@@ -130,11 +132,10 @@ namespace Epitech.Intra.SharedApp.Views
 
 			GetAndMarkNewNotifications(notifications, false);
 
-			var listview = new ListView () {
+			listview = new ListView () {
 				ItemsSource = notifications,
 				ItemTemplate = new DataTemplate (typeof(NotificationCell)),
-				HasUnevenRows = true,
-				IsPullToRefreshEnabled = true
+				HasUnevenRows = true
 			};
 
 			listview.ItemSelected += async (object sender, SelectedItemChangedEventArgs e) => {
@@ -152,11 +153,6 @@ namespace Epitech.Intra.SharedApp.Views
 					}
 					listview.SelectedItem = null;
 				}
-			};
-
-			listview.Refreshing += async (object sender, EventArgs e) => {
-				await RefreshData (true);
-				listview.IsRefreshing = false;
 			};
 
 			Content = listview;
@@ -213,8 +209,10 @@ namespace Epitech.Intra.SharedApp.Views
 
 				if (await FollowLink (year, module, instance, activity, isProject) == false)
 					return item.Href;
+				else
+					return null;
 			}
-			return null;
+			return String.Empty;
 		}
 
 		private async Task<bool> FollowLink (string year, string module, string instance, string activity, bool isProject)
@@ -247,6 +245,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 						if (target == null)
 							target = Activities [0];
+						break;
 					}
 				}
 				await Navigation.PushAsync (new Activity ((Calendar)target));

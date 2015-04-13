@@ -3,6 +3,7 @@
 using Xamarin.Forms;
 using Epitech.Intra.API.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Epitech.Intra.SharedApp
 {
@@ -10,10 +11,9 @@ namespace Epitech.Intra.SharedApp
 	{
 		public HeaderPlaning (List<Calendar> calendar)
 		{
-			var registeredEvent = new List<Calendar> (calendar).FindAll (x => x.EventRegistered == "registered");
+			var registeredEvent = new List<Calendar> (calendar).FindAll (x => x.EventRegistered == "registered" && x.Start > DateTime.Now).OrderBy(o=>o.Start).ToList();;
 			var nextevent = new List<Calendar> (calendar).FindAll (x => x.EventRegistered == "registered").FindAll(x => x.Start < DateTime.Now.AddDays(7) && x.Start > DateTime.Now);
 			nextevent.Sort ((x, y) => DateTime.Compare (y.Start, x.Start));
-			registeredEvent.Sort ((x, y) => DateTime.Compare (y.Start, x.Start));
 
 			if (registeredEvent.Count == 0)
 				return;
