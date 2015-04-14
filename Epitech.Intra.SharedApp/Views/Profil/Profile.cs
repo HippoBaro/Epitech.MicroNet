@@ -78,8 +78,8 @@ namespace Epitech.Intra.SharedApp.Views
 
 		public Profile (string user)
 		{
-			TargetUser = (user == null) ? App.API.login : user;
-			InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan(1, 0, 0), TargetUser);
+			TargetUser = (user == null) ? App.API.Login : user;
+			InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan (1, 0, 0), TargetUser);
 		}
 
 		protected override async void OnAppearing ()
@@ -87,9 +87,9 @@ namespace Epitech.Intra.SharedApp.Views
 			base.OnAppearing ();
 			plotview.Model = null;
 
-			TargetUser = (TargetUser == null) ? App.API.login : TargetUser;
+			TargetUser = (TargetUser == null) ? App.API.Login : TargetUser;
 			if (TargetUser != null) {
-				InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan(1, 0, 0), TargetUser);
+				InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan (1, 0, 0), TargetUser);
 				await RefreshData (false, TargetUser);
 			}
 		}
@@ -100,7 +100,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 			Title = ((User)Data).Title;
 
-			if (TargetUser != App.API.login) {
+			if (TargetUser != App.API.Login) {
 				ToolbarItems.Clear ();
 				ToolbarItems.Add (new ToolbarItem ("Email", null, new Action (delegate {
 					Device.OpenUri (new Uri ("mailto:" + ((User)Data).InternalEmail));

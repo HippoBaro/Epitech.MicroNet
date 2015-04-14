@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Epitech.Intra.SharedApp.Views;
 
 namespace Epitech.Intra.SharedApp
@@ -9,13 +7,11 @@ namespace Epitech.Intra.SharedApp
 	{
 		public SearchBox (Trombi handler)
 		{
-			SearchBar bar = new SearchBar () {
+			SearchBar bar = new SearchBar {
 				Placeholder = "Chercher quelqu'un",
 				HorizontalOptions = LayoutOptions.Fill,
 			};
-			bar.TextChanged += (object sender, TextChangedEventArgs e) => {
-				handler.Search (e.NewTextValue);
-			};
+			bar.TextChanged += (sender, e) => handler.Search (e.NewTextValue);
 
 			HorizontalOptions = LayoutOptions.Fill;
 			Children.Add (bar);

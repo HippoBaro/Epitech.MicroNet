@@ -19,10 +19,10 @@ namespace Epitech.Intra.SharedApp.Views
 			HorizontalOptions = LayoutOptions.Fill;
 			BackgroundColor = IntraColor.LightGray;
 			Spacing = 10;
-			Children.Add (new ContentView () {
+			Children.Add (new ContentView {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.Center,
-				Content = new Image () {
+				Content = new Image {
 					Source = API.PictureHelper.GetUserPictureUri (user.Picture, user.Login, Epitech.Intra.API.PictureHelper.PictureSize.Light),
 					HorizontalOptions = LayoutOptions.Fill,
 					VerticalOptions = LayoutOptions.Center,
@@ -31,13 +31,13 @@ namespace Epitech.Intra.SharedApp.Views
 					Aspect = Aspect.AspectFit
 				}
 			});
-			Children.Add (new StackLayout () {
+			Children.Add (new StackLayout {
 				Orientation = StackOrientation.Vertical,
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-					new Label () { Text = user.Title, FontSize = 20, TextColor = Color.White, FontAttributes = FontAttributes.Bold },
-					new Label () {
-						Text = ((user.Location == null) ? "" : user.Location + Environment.NewLine) + "Promotion " + user.Promo.ToString () + Environment.NewLine + "Semestre " + user.Semester.ToString (),
+					new Label { Text = user.Title, FontSize = 20, TextColor = Color.White, FontAttributes = FontAttributes.Bold },
+					new Label {
+						Text = ((user.Location == null) ? "" : user.Location + Environment.NewLine) + "Promotion " + user.Promo + Environment.NewLine + "Semestre " + user.Semester,
 						HorizontalOptions = LayoutOptions.Start,
 						TextColor = Color.White
 					},

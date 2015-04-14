@@ -7,36 +7,45 @@ namespace Epitech.Intra.SharedApp
 {
 	public class UserBox : ContentView
 	{
-		public UserBox (string FullName, string Login, string PictureUri, bool LinktoProfile, Color Background, Color TextColor)
+		public UserBox (string fullName, string login, string pictureUri, bool linktoProfile, Color background, Color textColor)
 		{
-			StackLayout root = new StackLayout () {
+			StackLayout root = new StackLayout {
 				Padding = new Thickness (10, 10, 10, 10)
 			};
 
-			this.WidthRequest = 150;
+			WidthRequest = 150;
 
-			this.BackgroundColor = Background;
+			BackgroundColor = background;
 
-			if (PictureUri == null)
-				PictureUri = API.PictureHelper.PicturePlaceholder;
+			if (pictureUri == null)
+				pictureUri = API.PictureHelper.PicturePlaceholder;
 
-			Image pic = new Image () {
-				Source = new Uri (PictureUri),
+			Image pic = new Image {
+				Source = new Uri (pictureUri),
 				HeightRequest = 40,
 				WidthRequest = 50
 			};
 
 			root.Children.Add (pic);
-			root.Children.Add (new Label () { Text = FullName, HorizontalOptions = LayoutOptions.Center, FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)), XAlign = TextAlignment.Center, TextColor = TextColor });
-			root.Children.Add (new Label () { Text = Login, HorizontalOptions = LayoutOptions.Center, FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)), TextColor = TextColor });
+			root.Children.Add (new Label {
+				Text = fullName,
+				HorizontalOptions = LayoutOptions.Center,
+				FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
+				XAlign = TextAlignment.Center,
+				TextColor = textColor
+			});
+			root.Children.Add (new Label {
+				Text = login,
+				HorizontalOptions = LayoutOptions.Center,
+				FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
+				TextColor = textColor
+			});
 
 			var tgr = new TapGestureRecognizer ();
-			tgr.Tapped += (s, e) => { 
-				Navigation.PushAsync (new Profile (Login));
-			};
+			tgr.Tapped += (s, e) => Navigation.PushAsync (new Profile (login));
 
-			if (LinktoProfile)
-				this.GestureRecognizers.Add (tgr);
+			if (linktoProfile)
+				GestureRecognizers.Add (tgr);
 
 			Content = root;
 		}

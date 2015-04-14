@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Epitech.Intra.API.Data.MarksJsonTypes;
-using Xamarin.Forms;
+﻿using Newtonsoft.Json;
 
 namespace Epitech.Intra.API.Data.MarksJsonTypes
 {
 	public class Module
 	{
-
 		[JsonProperty ("scolaryear")]
 		public int Scolaryear { get; set; }
 

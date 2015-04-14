@@ -30,7 +30,7 @@ namespace Epitech.Intra.SharedApp
 	{
 		public EventGroup (string grouptitle)
 		{
-			this.GroupTitle = grouptitle;
+			GroupTitle = grouptitle;
 		}
 
 		public string GroupTitle {
@@ -46,28 +46,28 @@ namespace Epitech.Intra.SharedApp
 
 		public EventSorting (EventFilterOption option, List<Calendar> list)
 		{
-			this.Option = option;
-			this.List = new List<Calendar> (list);
+			Option = option;
+			List = new List<Calendar> (list);
 		}
 
 		private List<Calendar> FilterAndSortList ()
 		{
-			if (Option.FilderAscending != true)
+			if (!Option.FilderAscending)
 				List.Sort ((a, b) => a.Start.CompareTo (b.Start));
 			else
 				List.Sort ((a, b) => b.Start.CompareTo (a.Start));
 
-			if (Option.DisplayPastEvent == false)
-				List = List.FindAll ((x => x.End > DateTime.Now || x.TokenAsked == true));
+			if (!Option.DisplayPastEvent)
+				List = List.FindAll ((x => x.End > DateTime.Now || x.TokenAsked));
 
 			if (Option.OnlyDisplayRegisteredEvent)
 				List = List.FindAll ((x => x.EventRegistered != null));
 			
 			if (Option.OnlyDisplayEventFromRegisteredModule)
-				List = List.FindAll ((x => x.ModuleRegistered != false));
+				List = List.FindAll ((x => x.ModuleRegistered));
 
 			if (Option.OnlyDisplayEventToRegister)
-				List = List.FindAll ((x => x.AllowRegister == true || x.TokenAsked == true));
+				List = List.FindAll ((x => x.AllowRegister || x.TokenAsked));
 
 			return List;
 		}
@@ -92,7 +92,7 @@ namespace Epitech.Intra.SharedApp
 					group1.Add (item);
 				else if (DateTime.Now.AddDays (7) >= item.Start)
 					group2.Add (item);
-				else if (item.AllowRegister == true && item.EventRegistered == null)
+				else if (item.AllowRegister && item.EventRegistered == null)
 					group3.Add (item);
 				else if (DateTime.Now.AddDays (7) < item.Start)
 					group4.Add (item);

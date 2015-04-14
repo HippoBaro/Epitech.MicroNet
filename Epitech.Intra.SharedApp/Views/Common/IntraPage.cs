@@ -22,24 +22,21 @@ namespace Epitech.Intra.SharedApp
 
 		public bool IsDataInvalidated (DateTime time)
 		{
-			if (DateTime.Compare (time + DataInvalidation, DateTime.Now) < 0)
-				return true;
-			else
-				return false;
+			return DateTime.Compare (time + DataInvalidation, DateTime.Now) < 0;
 		}
 
-		public void InitIntraPage (Type Type, Func<string, Task<object>> function, TimeSpan DataInvalidation, string dat)
+		public void InitIntraPage (Type type, Func<string, Task<object>> function, TimeSpan dataInvalidation, string dat)
 		{
-			this.DataInvalidation = DataInvalidation;
-			this.Type = Type;
+			DataInvalidation = dataInvalidation;
+			Type = type;
 			FunctionWithParam = function;
 			FunctionHasParam = true;
 		}
 
-		public void InitIntraPage (Type Type, Func<Task<object>> function, TimeSpan DataInvalidation)
+		public void InitIntraPage (Type type, Func<Task<object>> function, TimeSpan dataInvalidation)
 		{
-			this.DataInvalidation = DataInvalidation;
-			this.Type = Type;
+			DataInvalidation = dataInvalidation;
+			Type = type;
 			Function = function;
 			FunctionHasParam = false;
 		}
@@ -60,7 +57,7 @@ namespace Epitech.Intra.SharedApp
 						}
 					}
 					if (Type == typeof(Planning)) {
-						DependencyService.Get<IEventManager_iOS> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => x.Past == false && x.EventRegistered != null));
+						DependencyService.Get<IEventManagerIOS> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => !x.Past && x.EventRegistered != null));
 					}
 				} catch (Exception ex) {
 					Insights.Report (ex);
@@ -69,12 +66,12 @@ namespace Epitech.Intra.SharedApp
 			return Data;
 		}
 
-		public async Task RefreshData (bool ForceFetch, string dat)
+		public async Task RefreshData (bool forceFetch, string dat)
 		{
-			this.IsBusy = true;
+			IsBusy = true;
 			try {
-				if (IsDataInvalidated (LastUpdate) || Data == null || ForceFetch) {
-					if (!ForceFetch)
+				if (IsDataInvalidated (LastUpdate) || Data == null || forceFetch) {
+					if (!forceFetch)
 						Content = new LoadingScreen ();
 					await SilentUpdate (dat);
 					DisplayContent (Data);
@@ -83,15 +80,15 @@ namespace Epitech.Intra.SharedApp
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}
-			this.IsBusy = false;
+			IsBusy = false;
 		}
 
-		public async Task RefreshData (bool ForceFetch)
+		public async Task RefreshData (bool forceFetch)
 		{
-			this.IsBusy = true;
+			IsBusy = true;
 			try {
-				if ((IsDataInvalidated (LastUpdate) || Data == null) || ForceFetch) {
-					if (!ForceFetch)
+				if ((IsDataInvalidated (LastUpdate) || Data == null) || forceFetch) {
+					if (!forceFetch)
 						Content = new LoadingScreen ();
 					await SilentUpdate (null);
 					DisplayContent (Data);
@@ -100,26 +97,26 @@ namespace Epitech.Intra.SharedApp
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}
-			this.IsBusy = false;
+			IsBusy = false;
 		}
 
-		public virtual void DisplayContent (object Data)
+		public virtual void DisplayContent (object data)
 		{
-			this.IsBusy = false;
+			IsBusy = false;
 		}
 
 		public virtual void DisplayError (Exception ex)
 		{
-			Content = new StackLayout () {
+			Content = new StackLayout {
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-					new Image () {
+					new Image {
 						Source = ImageSource.FromFile ("404.jpg"),
 						HorizontalOptions = LayoutOptions.Fill,
 						VerticalOptions = LayoutOptions.Fill
 					},
-					new Label () {
+					new Label {
 						Text = ex.Message,
 						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,

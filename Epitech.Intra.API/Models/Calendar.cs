@@ -1,46 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Epitech.Intra.API.Data.CalendarJsonTypes;
-using Newtonsoft.Json.Converters;
 
 namespace Epitech.Intra.API.Data
 {
-
-	class CustomDateTimeConverter : IsoDateTimeConverter
-	{
-		public CustomDateTimeConverter ()
-		{
-			base.DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-		}
-	}
-
 	public class RegisterStudent
 	{
 		[JsonProperty ("id")]
-		public string id { get; set; }
+		public string Id { get; set; }
 
 		[JsonProperty ("login")]
-		public string login { get; set; }
+		public string Login { get; set; }
 
 		[JsonProperty ("title")]
-		public string title { get; set; }
+		public string Title { get; set; }
 
 		[JsonProperty ("picture")]
-		public string picture { get; set; }
+		public string Picture { get; set; }
 
 		[JsonProperty ("present")]
-		public object present { get; set; }
+		public object Present { get; set; }
 
 		[JsonProperty ("token_trace")]
-		public object token_trace { get; set; }
+		public object TokenTrace { get; set; }
 
 		[JsonProperty ("can_token")]
-		public string can_token { get; set; }
+		public string CanToken { get; set; }
 
 		[JsonProperty ("registered")]
-		public string registered { get; set; }
+		public string Registered { get; set; }
 	}
 
 	public class Calendar
@@ -80,10 +68,10 @@ namespace Epitech.Intra.API.Data
 		[JsonProperty ("num_event")]
 		public int NumEvent { get; set; }
 
-		[JsonProperty ("start"), JsonConverter (typeof(CustomDateTimeConverter))]
+		[JsonProperty ("start")]
 		public DateTime Start { get; set; }
 
-		[JsonProperty ("end"), JsonConverter (typeof(CustomDateTimeConverter))]
+		[JsonProperty ("end")]
 		public DateTime End { get; set; }
 
 		[JsonProperty ("total_students_registered")]

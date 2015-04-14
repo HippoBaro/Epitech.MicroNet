@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Epitech.Intra.API.Data;
 using OxyPlot.Xamarin.Forms;
 using OxyPlot;
@@ -17,7 +15,7 @@ namespace Epitech.Intra.SharedApp
 
 		public NetsoulGraph (User user, PlotView plotv)
 		{
-			if (user.Close == false && user.Netsoul != null) {
+			if (!user.Close && user.Netsoul != null) {
 				plotview = plotv;
 				Padding = new Thickness (5, 10, 5, 10);
 				Orientation = StackOrientation.Horizontal;
@@ -28,8 +26,7 @@ namespace Epitech.Intra.SharedApp
 
 				plotview = new PlotView ();
 				plotview.BackgroundColor = Color.Transparent;
-				if (plotview.Model != LineSeriesWithLabels (user.Netsoul.GetRange ((int)(0.75 * user.Netsoul.Count), user.Netsoul.Count - (int)(0.75 * user.Netsoul.Count))))
-					plotview.Model = LineSeriesWithLabels (user.Netsoul.GetRange ((int)(0.75 * user.Netsoul.Count), user.Netsoul.Count - (int)(0.75 * user.Netsoul.Count)));
+				plotview.Model = LineSeriesWithLabels (user.Netsoul.GetRange ((int)(0.75 * user.Netsoul.Count), user.Netsoul.Count - (int)(0.75 * user.Netsoul.Count)));
 				plotview.VerticalOptions = LayoutOptions.Fill;
 				plotview.HorizontalOptions = LayoutOptions.Fill;
 				plotview.HeightRequest = 80;
@@ -77,9 +74,9 @@ namespace Epitech.Intra.SharedApp
 			return model;
 		}
 
-		static private ColumnSeries GetActiveScoolLog (List<API.Data.UserJsonTypes.NetsoulRawData> netsoul)
+		static private ColumnSeries GetActiveScoolLog (IList<Epitech.Intra.API.Data.UserJsonTypes.NetsoulRawData> netsoul)
 		{
-			var s2 = new ColumnSeries () {
+			var s2 = new ColumnSeries {
 				LabelFormatString = "",
 				IsStacked = true,
 				LabelMargin = 5,
@@ -88,14 +85,14 @@ namespace Epitech.Intra.SharedApp
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
-				s2.Items.Add (new ColumnItem () { CategoryIndex = b - 1, Value = netsoul [i].TimeActiveScool / 3600 });
+				s2.Items.Add (new ColumnItem { CategoryIndex = b - 1, Value = netsoul [i].TimeActiveScool / 3600 });
 			}
 			return s2;
 		}
 
-		static private ColumnSeries GetIdleScoolLog (List<API.Data.UserJsonTypes.NetsoulRawData> netsoul)
+		static private ColumnSeries GetIdleScoolLog (IList<Epitech.Intra.API.Data.UserJsonTypes.NetsoulRawData> netsoul)
 		{
-			var s2 = new ColumnSeries () {
+			var s2 = new ColumnSeries {
 				LabelFormatString = "",
 				LabelMargin = 5,
 				IsStacked = true,
@@ -104,14 +101,14 @@ namespace Epitech.Intra.SharedApp
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
-				s2.Items.Add (new ColumnItem () { CategoryIndex = b - 1, Value = netsoul [i].TimeIldleScool / 3600 });
+				s2.Items.Add (new ColumnItem { CategoryIndex = b - 1, Value = netsoul [i].TimeIldleScool / 3600 });
 			}
 			return s2;
 		}
 
-		static private ColumnSeries GetActiveOutLog (List<API.Data.UserJsonTypes.NetsoulRawData> netsoul)
+		static private ColumnSeries GetActiveOutLog (IList<Epitech.Intra.API.Data.UserJsonTypes.NetsoulRawData> netsoul)
 		{
-			var s2 = new ColumnSeries () {
+			var s2 = new ColumnSeries {
 				LabelFormatString = "",
 				IsStacked = true,
 				LabelMargin = 5,
@@ -120,14 +117,14 @@ namespace Epitech.Intra.SharedApp
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
-				s2.Items.Add (new ColumnItem () { CategoryIndex = b - 1, Value = netsoul [i].TimeActiveOut / 3600 });
+				s2.Items.Add (new ColumnItem { CategoryIndex = b - 1, Value = netsoul [i].TimeActiveOut / 3600 });
 			}
 			return s2;
 		}
 
-		static private ColumnSeries GetIdleOutLog (List<API.Data.UserJsonTypes.NetsoulRawData> netsoul)
+		static private ColumnSeries GetIdleOutLog (IList<Epitech.Intra.API.Data.UserJsonTypes.NetsoulRawData> netsoul)
 		{
-			var s2 = new ColumnSeries () {
+			var s2 = new ColumnSeries {
 				LabelFormatString = "",
 				IsStacked = true,
 				TextColor = OxyColors.White,
@@ -135,14 +132,14 @@ namespace Epitech.Intra.SharedApp
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
-				s2.Items.Add (new ColumnItem () { CategoryIndex = b - 1, Value = netsoul [i].TimeIldleOut / 3600 });
+				s2.Items.Add (new ColumnItem { CategoryIndex = b - 1, Value = netsoul [i].TimeIldleOut / 3600 });
 			}
 			return s2;
 		}
 
-		static private LineSeries GetAverageLog (List<API.Data.UserJsonTypes.NetsoulRawData> netsoul)
+		static private LineSeries GetAverageLog (IList<Epitech.Intra.API.Data.UserJsonTypes.NetsoulRawData> netsoul)
 		{
-			var s2 = new LineSeries () {
+			var s2 = new LineSeries {
 				LabelFormatString = "",
 				LabelMargin = 5,
 				TextColor = OxyColors.White,

@@ -2,9 +2,6 @@
 
 using Xamarin.Forms;
 
-using System.Net;
-using System.Collections.Generic;
-
 namespace Epitech.Intra.SharedApp.Views
 {
 
@@ -13,11 +10,11 @@ namespace Epitech.Intra.SharedApp.Views
 		bool OpenViaAppLink (string ressource);
 	}
 
-	public class WebBrowser : IntraPage
+	public sealed class WebBrowser : IntraPage
 	{
-		public WebBrowser (string source, string Title)
+		public WebBrowser (string source, string title)
 		{
-			this.Title = Title;
+			Title = title;
 			Content = new LoadingScreen ();
 			try {
 				DisplayContent (source);
@@ -26,11 +23,9 @@ namespace Epitech.Intra.SharedApp.Views
 			}
 		}
 
-		private void DisplayContent(string source)
+		void DisplayContent (string source)
 		{
-			ToolbarItems.Add (new ToolbarItem ("OK", null, new Action (delegate() {
-				Navigation.PopModalAsync (true);
-			}), 0, 0));
+			ToolbarItems.Add (new ToolbarItem ("OK", null, new Action (() => Navigation.PopModalAsync (true))));
 
 			string tmp;
 			string target;
@@ -43,17 +38,16 @@ namespace Epitech.Intra.SharedApp.Views
 
 
 			if (tmp != "https://")
-				target = API.APIIndex.baseAPI + source;
+				target = API.APIIndex.BaseAPI + source;
 			else
 				target = source;
 
-			WebView webview = new WebView () { Source = target };
-			webview.Navigated += (object sender, WebNavigatedEventArgs e) => {
+			WebView webview = new WebView { Source = target };
+			webview.Navigated += (sender, e) => {
 				Content = webview;
 			};
-
-
-			this.Content = webview;
+				
+			Content = webview;
 		}
 	}
 }

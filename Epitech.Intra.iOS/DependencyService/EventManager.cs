@@ -1,30 +1,28 @@
 ﻿using System;
 using Epitech.Intra.SharedApp.Views;
 using Epitech.Intra.iOS;
-using UIKit;
 using Foundation;
-using System.Linq;
 using Epitech.Intra.API.Data;
 using System.Collections.Generic;
 using EventKit;
 using System.Threading.Tasks;
 using Epitech.Intra.SharedApp;
 
-[assembly: Xamarin.Forms.Dependency (typeof(EventManager_iOS))]
+[assembly: Xamarin.Forms.Dependency (typeof(EventManagerIOS))]
 namespace Epitech.Intra.iOS
 {
-	public class EventManager_iOS : IEventManager_iOS
+	public class EventManagerIOS : IEventManagerIOS
 	{
-		public static EKEventStore eventStore;
+		public static EKEventStore EventStore;
 		const string CalendarIDKey = "CalendarIdForEventSynch";
 
-		public EKCalendar Calendar {
+		public static EKCalendar Calendar {
 			get {
 				string val = NSUserDefaults.StandardUserDefaults.StringForKey (CalendarIDKey); 
 				if (val == null) {
 					return CreateNewCalendar ();
 				} else {
-					foreach (var item in eventStore.Calendars) {
+					foreach (var item in EventStore.Calendars) {
 						if (item.CalendarIdentifier == val)
 							return item;
 					}
@@ -33,32 +31,30 @@ namespace Epitech.Intra.iOS
 			}
 		}
 
-		private EKCalendar CreateNewCalendar()
+		static EKCalendar CreateNewCalendar ()
 		{
 			NSError err;
-			EKCalendar cal = EventKit.EKCalendar.Create (EKEntityType.Event, eventStore);
+			EKCalendar cal = EKCalendar.Create (EKEntityType.Event, EventStore);
 			cal.Title = "Evènements Epitech";
-			foreach (EKSource s in eventStore.Sources) {
+			foreach (EKSource s in EventStore.Sources) {
 				if (s.SourceType == EKSourceType.CalDav) {
 					cal.Source = s;
 					break;
 				}
 			}
 			if (cal.Source == null) {
-				foreach (EKSource s in eventStore.Sources) {
+				foreach (EKSource s in EventStore.Sources) {
 					if (s.SourceType == EKSourceType.Local) {
 						cal.Source = s;
 						break;
 					}
 				}
 			}
-			bool didwell = eventStore.SaveCalendar (cal, true, out err);
+			bool didwell = EventStore.SaveCalendar (cal, true, out err);
 			if (!didwell)
 				throw new Exception ("SaveCalendar failed");
-			else {
-				NSUserDefaults.StandardUserDefaults.SetString (cal.CalendarIdentifier, CalendarIDKey);
-				NSUserDefaults.StandardUserDefaults.Synchronize ();
-			}
+			NSUserDefaults.StandardUserDefaults.SetString (cal.CalendarIdentifier, CalendarIDKey);
+			NSUserDefaults.StandardUserDefaults.Synchronize ();
 			return cal;
 		}
 
@@ -66,7 +62,7 @@ namespace Epitech.Intra.iOS
 		{
 			try {
 				await Task.Factory.StartNew (new Action (() => {
-					if ((((App)App.Current).HasAllowedEventKit) || (((App)App.Current).UserHasActivatedEventSync)) {
+					if ((((App)Xamarin.Forms.Application.Current).HasAllowedEventKit) || (((App)Xamarin.Forms.Application.Current).UserHasActivatedEventSync)) {
 						SelectUnregisteredEvents (events);
 						RegisterEvents (events);
 						DeleteUnregisteredEvent (events);
@@ -77,12 +73,12 @@ namespace Epitech.Intra.iOS
 			}
 		}
 
-		public void RegisterEvents (List<Calendar> events)
+		public static void RegisterEvents (List<Calendar> events)
 		{
 			foreach (var item in events) {
 				if (!item.RegisterEventForStoring)
 					continue;
-				EKEvent newEvent = EKEvent.FromStore (eventStore);
+				EKEvent newEvent = EKEvent.FromStore (EventStore);
 				newEvent.StartDate = DateTimeToNSDate (item.Start).AddSeconds (-(3600 * 2));
 				newEvent.EndDate = DateTimeToNSDate (item.End).AddSeconds (-(3600 * 2));
 				newEvent.Title = item.ActiTitle;
@@ -91,7 +87,7 @@ namespace Epitech.Intra.iOS
 				newEvent.Notes = "Type : " + item.TypeTitle + Environment.NewLine + "Module : " + item.Titlemodule;
 				newEvent.Calendar = Calendar;
 				NSError e;
-				bool succes = eventStore.SaveEvent (newEvent, EKSpan.ThisEvent, out e);
+				bool succes = EventStore.SaveEvent (newEvent, EKSpan.ThisEvent, out e);
 				if (succes)
 					item.EventKitID = newEvent.EventIdentifier;
 				else
@@ -99,12 +95,12 @@ namespace Epitech.Intra.iOS
 			}
 		}
 
-		private void DeleteUnregisteredEvent (List<Calendar> events)
+		static void DeleteUnregisteredEvent (List<Calendar> events)
 		{
 			NSDate startDate = DateTimeToNSDate (DateTime.Now).AddSeconds (-(3600 * 2));
 			NSDate endDate = DateTimeToNSDate (DateTime.Now.AddMonths (1)).AddSeconds (-(3600 * 2));
-			NSPredicate query = eventStore.PredicateForEvents (startDate, endDate, new EKCalendar[] { Calendar });
-			EKEvent[] queryresult = eventStore.EventsMatching (query);
+			NSPredicate query = EventStore.PredicateForEvents (startDate, endDate, new [] { Calendar });
+			EKEvent[] queryresult = EventStore.EventsMatching (query);
 			if (queryresult == null)
 				return;
 			EKEvent[] todelete = Array.FindAll (queryresult, x => {
@@ -118,19 +114,19 @@ namespace Epitech.Intra.iOS
 			NSError err;
 			bool succes;
 			foreach (var item in todelete) {
-				succes = eventStore.RemoveEvent (item, EKSpan.ThisEvent, true, out err);
+				succes = EventStore.RemoveEvent (item, EKSpan.ThisEvent, true, out err);
 				if (!succes)
 					throw new Exception ("Delete failed");
 			}
 		}
 
-		private void SelectUnregisteredEvents (List<Calendar> events)
+		static void SelectUnregisteredEvents (List<Calendar> events)
 		{
 			foreach (var item in events) {
 				NSDate startDate = DateTimeToNSDate (item.Start).AddSeconds (-(3600 * 2));
 				NSDate endDate = DateTimeToNSDate (item.End).AddSeconds (-(3600 * 2));
-				NSPredicate query = eventStore.PredicateForEvents (startDate, endDate, new EKCalendar[] { Calendar });
-				EKEvent[] queryresult = eventStore.EventsMatching (query);
+				NSPredicate query = EventStore.PredicateForEvents (startDate, endDate, new [] { Calendar });
+				EKEvent[] queryresult = EventStore.EventsMatching (query);
 				bool exist = false;
 				if (queryresult == null) {
 					item.RegisterEventForStoring = true;

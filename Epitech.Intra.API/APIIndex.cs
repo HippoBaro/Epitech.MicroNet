@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -13,7 +12,6 @@ using Epitech.Intra.API.Data.WelcomeJsonTypes;
 
 namespace Epitech.Intra.API
 {
-
 	public abstract class HTMLCleaner
 	{
 		public struct LinkItem
@@ -82,46 +80,45 @@ namespace Epitech.Intra.API
 		// Your Customer's Device doesn't have unlimited memory nor bandwith and data plan.
 		// ResponsePicture if for supporting placeholder.
 		//
-		public static string GetUserPictureUri (string ResponsePicture, string forLogin, PictureSize size)
+		public static string GetUserPictureUri (string responsePicture, string forLogin, PictureSize size)
 		{
 			//Large ~ 230Ko
 			//Light ~ 5Ko
 			//VeryLight ~ 2 Ko
 
-			if (ResponsePicture == null || !(ResponsePicture.EndsWith (forLogin + ".bmp") || ResponsePicture.EndsWith (forLogin + ".jpg")))
+			if (responsePicture == null || !(responsePicture.EndsWith (forLogin + ".bmp", StringComparison.Ordinal) || responsePicture.EndsWith (forLogin + ".jpg", StringComparison.Ordinal)))
 				return PicturePlaceholder;
 
 			if (size == PictureSize.Large)
 				return "https://cdn.local.epitech.eu/userprofil/" + forLogin + ".bmp";
-			else if (size == PictureSize.Light)
+			if (size == PictureSize.Light)
 				return "https://cdn.local.epitech.eu/userprofil/profilview/" + forLogin + ".jpg";
-			else
-				return "https://cdn.local.epitech.eu/userprofil/commentview/" + forLogin + ".jpg";
+			return "https://cdn.local.epitech.eu/userprofil/commentview/" + forLogin + ".jpg";
 		}
 
 	}
 
 	public class APIIndex
 	{
-		public const string baseAPI = "https://intra.epitech.eu";
-		public string login;
-		private string password;
+		public const string BaseAPI = "https://intra.epitech.eu";
+		public string Login;
+		string password;
 
-		private Uri buildUri (string target)
+		static Uri buildUri (string target)
 		{
-			return new Uri (baseAPI + target + "?format=json");
+			return new Uri (BaseAPI + target + "?format=json");
 		}
 
 		public void ForgetCredit ()
 		{
-			login = null;
+			Login = null;
 			password = null;
 		}
 
-		private FormUrlEncodedContent GetHeader ()
+		FormUrlEncodedContent GetHeader ()
 		{
-			List<KeyValuePair<string,string>> head = new List<KeyValuePair<string,string>> ();
-			head.Add (new KeyValuePair<string, string> ("login", login));
+			var head = new List<KeyValuePair<string,string>> ();
+			head.Add (new KeyValuePair<string, string> ("login", Login));
 			head.Add (new KeyValuePair<string, string> ("password", password));
 			head.Add (new KeyValuePair<string, string> ("rememberme", "on"));
 
@@ -135,7 +132,7 @@ namespace Epitech.Intra.API
 		{
 			HttpClient client = new HttpClient ();
 
-			this.login = login;
+			Login = login;
 			this.password = password;
 
 			try {
@@ -146,17 +143,15 @@ namespace Epitech.Intra.API
 			}
 		}
 
-		public async Task<Data.Welcome> GetWelcome ()
+		public async Task<Welcome> GetWelcome ()
 		{
 			HttpClient client = new HttpClient ();
 
 			try {
 				var result = await client.PostAsync (buildUri ("/"), GetHeader ());
-				if (!result.IsSuccessStatusCode)
-					return null;
-				return Newtonsoft.Json.JsonConvert.DeserializeObject<Data.Welcome> (await result.Content.ReadAsStringAsync ());
-			} catch {
-				throw new Exception("Erreur");
+				return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ());
+			} catch (Exception e) {
+				throw new Exception ("Erreur", e);
 			}
 
 		}
@@ -170,12 +165,12 @@ namespace Epitech.Intra.API
 			if (!result.IsSuccessStatusCode)
 				return null;
 			try {
-			user = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.User> (await result.Content.ReadAsStringAsync ());
+				user = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.User> (await result.Content.ReadAsStringAsync ());
 			} catch {
 				throw new Exception ("Impossible de récuperer les information utilisateur. Ce compte est peut-être un compte spécial pas encore supporté par l'application.");
 			}
 
-			if (user.Close != true && user.Nsstat != null) {
+			if (!user.Close && user.Nsstat != null) {
 				result = await client.PostAsync (buildUri ("/user/" + login + "/netsoul/"), GetHeader ());
 				if (!result.IsSuccessStatusCode)
 					return null;
@@ -198,7 +193,7 @@ namespace Epitech.Intra.API
 			if (!result.IsSuccessStatusCode)
 				return null;
 			try {
-				user.Marks = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.UserMarks> (await result.Content.ReadAsStringAsync ());
+				user.Marks = Newtonsoft.Json.JsonConvert.DeserializeObject<UserMarks> (await result.Content.ReadAsStringAsync ());
 				Array.Reverse (user.Marks.Modules);
 			} catch {
 				user.Marks = null;
@@ -206,12 +201,12 @@ namespace Epitech.Intra.API
 			return user;
 		}
 
-		private void DetectTokenAsked(List<Data.Calendar> list, Data.Welcome tokentest)
+		static void DetectTokenAsked (List<Calendar> list, Welcome tokentest)
 		{
 			Activite[] token = Array.FindAll (tokentest.Board.Activites, x => x.Token != null);
 
 			foreach (var item in token) {
-				int i = 0;
+				int i;
 				string year;
 				string module;
 				string instance;
@@ -220,7 +215,7 @@ namespace Epitech.Intra.API
 
 				string temp = item.TokenLink;
 
-				if (!temp.StartsWith ("/module/"))
+				if (!temp.StartsWith ("/module/", StringComparison.Ordinal))
 					continue;
 				temp = temp.Remove (0, 8);
 				year = temp.Substring (0, 4);
@@ -271,38 +266,36 @@ namespace Epitech.Intra.API
 		public async Task<object> GetCalendar ()
 		{
 			HttpClient client = new HttpClient ();
-			List<Data.Calendar> list;
+			List<Calendar> list;
 
 			try {
-			var result = await client.PostAsync (buildUri ("/planning/load"), GetHeader ());
-			if (!result.IsSuccessStatusCode)
-				return null;
-				list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Data.Calendar>> (await result.Content.ReadAsStringAsync ());
+				var result = await client.PostAsync (buildUri ("/planning/load"), GetHeader ());
+				if (!result.IsSuccessStatusCode)
+					return null;
+				list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Calendar>> (await result.Content.ReadAsStringAsync ());
 
 				result = await client.PostAsync (buildUri ("/"), GetHeader ());
-				Data.Welcome tokentest = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.Welcome> (await result.Content.ReadAsStringAsync ());
-				DetectTokenAsked(list, tokentest);
+				Welcome tokentest = Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ());
+				DetectTokenAsked (list, tokentest);
 			} catch {
 				throw new Exception ("Impossible de récuperer les informations du calendrier.");
 			}
 			return list;
 		}
 
-		public async Task<object> GetActivityRegisteredStudent (Data.Calendar activity)
+		public async Task<object> GetActivityRegisteredStudent (Calendar activity)
 		{
 			HttpClient client = new HttpClient ();
 
 			try {
 				var result = await client.PostAsync (buildUri ("/module/" + activity.Scolaryear + "/" + activity.Codemodule + "/" + activity.Codeinstance + "/" + activity.Codeacti + "/" + activity.Codeevent + "/registered"), GetHeader ());
-				if (!result.IsSuccessStatusCode)
-					return null;
-				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Data.RegisterStudent>> (await result.Content.ReadAsStringAsync ());
+				return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<List<RegisterStudent>> (await result.Content.ReadAsStringAsync ());
 			} catch {
 				return null;
 			}
 		}
 
-		public async Task<bool> RegistertoActivity (Data.Calendar activity)
+		public async Task<bool> RegistertoActivity (Calendar activity)
 		{
 			HttpClient client = new HttpClient ();
 
@@ -310,12 +303,12 @@ namespace Epitech.Intra.API
 				var result = await client.PostAsync (buildUri ("/module/" + activity.Scolaryear + "/" + activity.Codemodule + "/" + activity.Codeinstance + "/" + activity.Codeacti + "/" + activity.Codeevent + "/register"), GetHeader ());
 				return result.IsSuccessStatusCode;
 			} catch {
-				throw new Exception("Impossible de s'inscrire");
+				throw new Exception ("Impossible de s'inscrire");
 			}
 
 		}
 
-		public async Task<bool> UnregistertoActivity (Data.Calendar activity)
+		public async Task<bool> UnregistertoActivity (Calendar activity)
 		{
 			HttpClient client = new HttpClient ();
 
@@ -333,9 +326,7 @@ namespace Epitech.Intra.API
 			HttpClient client = new HttpClient ();
 			try {
 				var result = await client.PostAsync (buildUri ("/module/" + note.Scolaryear + "/" + note.Codemodule + "/" + note.Codeinstance + "/" + note.Codeacti + "/note"), GetHeader ());
-				if (!result.IsSuccessStatusCode)
-					return null;
-				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<ActivityMark>> (await result.Content.ReadAsStringAsync ());
+				return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<List<ActivityMark>> (await result.Content.ReadAsStringAsync ());
 			} catch {
 				return null;
 			}
@@ -350,12 +341,12 @@ namespace Epitech.Intra.API
 				return null;
 
 			try {
-				Data.WelcomeJsonTypes.Projet[] temp = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.Welcome> (await result.Content.ReadAsStringAsync ()).Board.Projets;
+				Projet[] temp = Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ()).Board.Projets;
 
-				List<Data.Project> projects = new List<Data.Project> ();
+				List<Project> projects = new List<Project> ();
 				foreach (var item in temp) {
 					result = await client.PostAsync (buildUri (item.TitleLink + "project"), GetHeader ());
-					projects.Add (Newtonsoft.Json.JsonConvert.DeserializeObject<Data.Project> (await result.Content.ReadAsStringAsync ()));
+					projects.Add (Newtonsoft.Json.JsonConvert.DeserializeObject<Project> (await result.Content.ReadAsStringAsync ()));
 				}
 				return projects;
 			} catch {
@@ -363,17 +354,17 @@ namespace Epitech.Intra.API
 			}
 		}
 
-		public async Task<List<Data.Trombi>> GetSearchResult (string search)
+		public async Task<List<Trombi>> GetSearchResult (string search)
 		{
 			HttpClient client = new HttpClient ();
 
 			if (search.Length < 3)
 				return null;
-			var result = await client.PostAsync (new Uri (baseAPI + "/user/complete?format=json&contains=&search=" + search), GetHeader ());
+			var result = await client.PostAsync (new Uri (BaseAPI + "/user/complete?format=json&contains=&search=" + search), GetHeader ());
 			if (!result.IsSuccessStatusCode)
 				return null;
 			try {
-				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Data.Trombi>> (await result.Content.ReadAsStringAsync ());
+				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Trombi>> (await result.Content.ReadAsStringAsync ());
 			} catch {
 				throw new Exception ("Impossible de récuperer les profils");
 			}
@@ -392,13 +383,13 @@ namespace Epitech.Intra.API
 				List<Files> root = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>> (await result.Content.ReadAsStringAsync ());
 				resultlist.AddRange (root);
 				foreach (var item in root) {
-					if (item.type == "d") {
-						result = await client.PostAsync (buildUri ("/module/" + project.Scolaryear + "/" + project.Codemodule + "/" + project.Codeinstance + "/" + project.Codeacti + "/project/file/" + item.slug + "/"), GetHeader ());
+					if (item.TypeOfFile == "d") {
+						result = await client.PostAsync (buildUri ("/module/" + project.Scolaryear + "/" + project.Codemodule + "/" + project.Codeinstance + "/" + project.Codeacti + "/project/file/" + item.Slug + "/"), GetHeader ());
 						List<Files> toAppend = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>> (await result.Content.ReadAsStringAsync ());
 						resultlist.AddRange (toAppend);
 					}
 				}
-				return resultlist.FindAll (x => x.type != "d");
+				return resultlist.FindAll (x => x.TypeOfFile != "d");
 			} catch {
 				throw new Exception ("Impossible de récuperer les sujets");
 			}

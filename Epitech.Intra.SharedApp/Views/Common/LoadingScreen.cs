@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace Epitech.Intra.SharedApp.Views
 {
@@ -12,7 +10,7 @@ namespace Epitech.Intra.SharedApp.Views
 			Spacing = 10;
 			HorizontalOptions = LayoutOptions.Center;
 			VerticalOptions = LayoutOptions.Center;
-			Children.Add (new ActivityIndicator () {
+			Children.Add (new ActivityIndicator {
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
 				IsVisible = true,

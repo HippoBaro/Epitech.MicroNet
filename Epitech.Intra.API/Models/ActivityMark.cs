@@ -7,52 +7,52 @@ namespace Epitech.Intra.API
 	public class ActivityMark
 	{
 		[JsonProperty ("title")]
-		public string title { get; set; }
+		public string Title { get; set; }
 
 		[JsonProperty ("login")]
-		public string login { get; set; }
+		public string Login { get; set; }
 
 		[JsonProperty ("user_title")]
-		public string user_title { get; set; }
+		public string UserTitle { get; set; }
 
 		[JsonProperty ("picture")]
-		public string picture { get; set; }
+		public string Picture { get; set; }
 
 		[JsonProperty ("all_members")]
-		public object all_members { get; set; }
+		public object AllMembers { get; set; }
 
 		[JsonProperty ("status")]
-		public object status { get; set; }
+		public object Status { get; set; }
 
 		[JsonProperty ("note")]
-		public double note { get; set; }
+		public double Note { get; set; }
 
 		[JsonProperty ("comment")]
-		public string comment { get; set; }
+		public string Comment { get; set; }
 
 		[JsonProperty ("editable")]
-		public bool editable { get; set; }
+		public bool Editable { get; set; }
 
 		[JsonProperty ("type")]
-		public string type { get; set; }
+		public string Type { get; set; }
 
 		[JsonProperty ("grader")]
-		public string grader { get; set; }
+		public string Grader { get; set; }
 
 		[JsonProperty ("date")]
-		public string date { get; set; }
+		public string Date { get; set; }
 
 		[JsonProperty ("group_title")]
-		public string group_title { get; set; }
+		public string GroupTitle { get; set; }
 
 		[JsonProperty ("group_master")]
-		public string group_master { get; set; }
+		public string GroupMaster { get; set; }
 
 		[JsonProperty ("member_status")]
-		public string member_status { get; set; }
+		public string MemberStatus { get; set; }
 
 		[JsonProperty ("members")]
-		public List<object> members { get; set; }
+		public List<object> Members { get; set; }
 	}
 }
 

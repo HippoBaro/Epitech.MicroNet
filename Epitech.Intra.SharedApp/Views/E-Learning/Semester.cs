@@ -10,7 +10,7 @@ namespace Epitech.Intra.SharedApp.Views
 	{
 		public Semester ()
 		{
-			InitIntraPage (typeof(Semester), App.API.GetELearning, new TimeSpan(5, 0, 0, 0));
+			InitIntraPage (typeof(Semester), App.API.GetELearning, new TimeSpan (5, 0, 0, 0));
 		}
 
 		protected override async void OnAppearing ()
@@ -21,29 +21,29 @@ namespace Epitech.Intra.SharedApp.Views
 				await RefreshData (false);
 		}
 
-		public override void DisplayContent (object Data)
+		public override void DisplayContent (object data)
 		{
-			base.DisplayContent (Data);
+			base.DisplayContent (data);
 
 			Title = "E-Learning";
 
 			ListView list = new ListView {
 				ItemTemplate = new DataTemplate (typeof(TextCell)) {
 					Bindings = {
-						{ TextCell.TextProperty, new Binding ("semester") { StringFormat = "Semestre {0}" } },
+						{ TextCell.TextProperty, new Binding ("Semester") { StringFormat = "Semestre {0}" } },
 						{ TextCell.DetailProperty, new Binding ("InnerCount") { StringFormat = "{0} Modules disponible" } }
 					}
 				},
-				ItemsSource = ((List<API.Data.ELearning>)Data),
+				ItemsSource = ((List<API.Data.ELearning>)data),
 				IsPullToRefreshEnabled = true
 			};
 
-			list.Refreshing += async (object sender, EventArgs e) => {
+			list.Refreshing += async (sender, e) => {
 				await RefreshData (true);
 				list.IsRefreshing = false;
 			};
 
-			list.ItemSelected += async (object sender, SelectedItemChangedEventArgs e) => {
+			list.ItemSelected += async (sender, e) => {
 				if (e.SelectedItem == null)
 					return;
 				await Navigation.PushAsync (new Modules (((API.Data.ELearning)e.SelectedItem)));

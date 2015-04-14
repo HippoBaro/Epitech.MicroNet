@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Epitech.Intra.API.Data;
 
 namespace Epitech.Intra.SharedApp
@@ -13,20 +11,20 @@ namespace Epitech.Intra.SharedApp
 				return;
 			}
 				
-			StackLayout GPA = new StackLayout () {
+			StackLayout GPA = new StackLayout {
 				HorizontalOptions = LayoutOptions.Fill,
 				VerticalOptions = LayoutOptions.Center,
 				BackgroundColor = IntraColor.LightGray,
 				Padding = new Thickness (10, 0, 10, 0),
 				Children = {
-					new Label () {
+					new Label {
 						Text = "GPA :",
 						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,
 						FontSize = Device.GetNamedSize (NamedSize.Medium, typeof(Label)),
 						TextColor = Color.White,
 					},
-					new Label () {
+					new Label {
 						Text = user.Gpa [user.Gpa.Length - 1].GPA.ToString (),
 						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,
@@ -34,8 +32,8 @@ namespace Epitech.Intra.SharedApp
 						FontAttributes = FontAttributes.Bold,
 						TextColor = Color.White,
 					},
-					new Label () {
-						Text = "Moyenne : " + user.AverageGPA [user.Gpa.Length - 1].GpaAverage.ToString (),
+					new Label {
+						Text = "Moyenne : " + user.AverageGPA [user.Gpa.Length - 1].GpaAverage,
 						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,
 						FontSize = Device.GetNamedSize (NamedSize.Micro, typeof(Label)),
@@ -45,21 +43,21 @@ namespace Epitech.Intra.SharedApp
 				}
 			};
 
-			StackLayout Credit = new StackLayout () {
+			StackLayout Credit = new StackLayout {
 				HorizontalOptions = LayoutOptions.Fill,
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-					new Label () {
+					new Label {
 						XAlign = TextAlignment.Center,
-						Text = "Crédit acquis : " + user.Credits.ToString(),
+						Text = "Crédit acquis : " + user.Credits,
 						HorizontalOptions = LayoutOptions.Fill,
 						VerticalOptions = LayoutOptions.Center,
 						FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
 						TextColor = Color.White,
 					},
-					new Label () {
+					new Label {
 						XAlign = TextAlignment.Center,
-						Text = "En cours d'acquisition : " + CalcCreditGoal (user).ToString(),
+						Text = "En cours d'acquisition : " + CalcCreditGoal (user),
 						FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
 						HorizontalOptions = LayoutOptions.Fill,
 						VerticalOptions = LayoutOptions.Center,
@@ -76,7 +74,7 @@ namespace Epitech.Intra.SharedApp
 			HorizontalOptions = LayoutOptions.Fill;
 		}
 
-		private int CalcCreditGoal (User user)
+		static int CalcCreditGoal (User user)
 		{
 			int result = 0;
 

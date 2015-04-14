@@ -7,7 +7,6 @@ using Epitech.Intra.SharedApp.Views;
 
 namespace Epitech.Intra.SharedApp.Views
 {
-
 	public class PresenceCell : ViewCell
 	{
 		private RegisterStudent student;
@@ -21,18 +20,18 @@ namespace Epitech.Intra.SharedApp.Views
 
 		private void DrawCell ()
 		{
-			var root = new StackLayout () {
+			var root = new StackLayout {
 				Orientation = StackOrientation.Horizontal,
 				Padding = new Thickness (10, 5, 10, 5)
 			};
 					
-			Image Img = new Image () {
-				Source = API.PictureHelper.GetUserPictureUri (student.picture, student.login, Epitech.Intra.API.PictureHelper.PictureSize.VeryLight),
+			Image Img = new Image {
+				Source = API.PictureHelper.GetUserPictureUri (student.Picture, student.Login, Epitech.Intra.API.PictureHelper.PictureSize.VeryLight),
 				HeightRequest = 40,
 				WidthRequest = 30
 			};
 
-			StackLayout Main = new StackLayout () {
+			StackLayout Main = new StackLayout {
 				Padding = new Thickness (10, 0, 0, 0),
 				Spacing = -3,
 				HorizontalOptions = LayoutOptions.Fill,
@@ -40,18 +39,18 @@ namespace Epitech.Intra.SharedApp.Views
 				Orientation = StackOrientation.Vertical,
 			};
 
-			Label name = new Label () {
+			Label name = new Label {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				FontSize = Device.GetNamedSize (NamedSize.Medium, typeof(Label)),
-				Text = student.title,
+				Text = student.Title,
 			};
 
-			Label desc = new Label () {
+			Label desc = new Label {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				FontSize = Device.GetNamedSize (NamedSize.Micro, typeof(Label)),
-				Text = student.login,
+				Text = student.Login,
 			};
 
 			Main.Children.Add (name);
@@ -64,12 +63,12 @@ namespace Epitech.Intra.SharedApp.Views
 		}
 	}
 
-	public class Activity : IntraPage
+	public sealed class Activity : IntraPage
 	{
 		public Activity (Calendar activity)
 		{
 			Title = activity.ActiTitle;
-			Content = new ActivityIndicator () {
+			Content = new ActivityIndicator {
 				IsRunning = true,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center
@@ -95,18 +94,18 @@ namespace Epitech.Intra.SharedApp.Views
 					HasUnevenRows = true,
 				};
 
-				list.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+				list.ItemSelected += (sender, e) => {
 					if (e.SelectedItem != null) {
-						Navigation.PushAsync (new Profile (((API.Data.RegisterStudent)e.SelectedItem).login));
+						Navigation.PushAsync (new Profile (((RegisterStudent)e.SelectedItem).Login));
 						((ListView)sender).SelectedItem = null;
 					}
 				};
 
 				root.Children.Add (list);
 			} else {
-				var message = new StackLayout () {
+				var message = new StackLayout {
 					Padding = new Thickness (10, 10, 10, 10),
-					Children = { new Label () {
+					Children = { new Label {
 							Text = "Cette activité comporte un système d'inscription par slot." + Environment.NewLine + "Rendez-vous sur l'intranet pour réserver un slot.",
 							XAlign = TextAlignment.Center
 						}

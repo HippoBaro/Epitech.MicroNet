@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Epitech.Intra.API.Data.CalendarJsonTypes;
+﻿using Newtonsoft.Json;
 
 namespace Epitech.Intra.API.Data
 {
 	public class Trombi
 	{
-		[JsonProperty("title")]
+		[JsonProperty ("title")]
 		public string FullName { get; set; }
 
-		[JsonProperty("type")]
-		public string type { get; set; }
+		[JsonProperty ("type")]
+		public string Type { get; set; }
 
-		[JsonProperty("login")]
-		public string login { get; set; }
+		[JsonProperty ("login")]
+		public string Login { get; set; }
 
-		[JsonProperty("picture")]
-		public string picture { get; set; }
+		[JsonProperty ("picture")]
+		public string Picture { get; set; }
 
-		[JsonProperty("course_code")]
-		public string course_code { get; set; }
+		[JsonProperty ("course_code")]
+		public string CourseCode { get; set; }
 
-		[JsonProperty("promo")]
-		public string promo { get; set; }
+		[JsonProperty ("promo")]
+		public string Promo { get; set; }
 
-		[JsonProperty("course")]
-		public string course { get; set; }
+		[JsonProperty ("course")]
+		public string Course { get; set; }
 	}
 }
 

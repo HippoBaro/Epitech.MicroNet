@@ -1,10 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
-
-using ExifLib;
-
-using Xamarin.Forms.Labs;
+﻿using Xamarin.Forms;
 using XLabs.Forms.Controls;
 
 namespace Epitech.Intra.SharedApp
@@ -13,11 +7,11 @@ namespace Epitech.Intra.SharedApp
 	{
 		public MenuHeader ()
 		{
-			if (((App)App.Current).User == null)
+			if (((App)Application.Current).User == null)
 				return;
 
-			CircleImage Profile = new CircleImage () {
-				Source = API.PictureHelper.GetUserPictureUri(((App)App.Current).User.Picture, ((App)App.Current).User.Login, Epitech.Intra.API.PictureHelper.PictureSize.Light),
+			CircleImage Profile = new CircleImage {
+				Source = API.PictureHelper.GetUserPictureUri (((App)Application.Current).User.Picture, ((App)Application.Current).User.Login, Epitech.Intra.API.PictureHelper.PictureSize.Light),
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center,
 				Aspect = Aspect.Fill,
@@ -25,8 +19,8 @@ namespace Epitech.Intra.SharedApp
 				WidthRequest = 120
 			};
 
-			Label Name = new Label () {
-				Text = ((App)App.Current).User.Title,
+			Label Name = new Label {
+				Text = ((App)Application.Current).User.Title,
 				HorizontalOptions = LayoutOptions.Center,
 				FontSize = Device.GetNamedSize (NamedSize.Large, typeof(Label)),
 				TextColor = Color.White,

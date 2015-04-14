@@ -3,25 +3,21 @@
 using Xamarin.Forms;
 using Epitech.Intra.API.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Epitech.Intra.API;
 
 namespace Epitech.Intra.SharedApp.Views
 {
-	public interface IEventManager_iOS
+	public interface IEventManagerIOS
 	{
 		void SynchrosizeCalendar (List<Calendar> events);
 	}
 
 	public class Planning : IntraPage
 	{
-		EventFilterOption Filters = new EventFilterOption () { OnlyDisplayEventFromRegisteredModule = true };
+		readonly EventFilterOption Filters = new EventFilterOption { OnlyDisplayEventFromRegisteredModule = true };
 
-		public Planning()
+		public Planning ()
 		{
-			InitIntraPage (typeof(Planning), App.API.GetCalendar, new TimeSpan(1, 0, 0));
+			InitIntraPage (typeof(Planning), App.API.GetCalendar, new TimeSpan (1, 0, 0));
 		}
 
 		protected override async void OnAppearing ()
@@ -33,18 +29,20 @@ namespace Epitech.Intra.SharedApp.Views
 			await RefreshData (false);
 		}
 
-		public override void DisplayContent (object Data)
+		public override void DisplayContent (object data)
 		{
-			base.DisplayContent (Data);
+			base.DisplayContent (data);
 
 			ToolbarItems.Clear ();
-			ToolbarItems.Add (new ToolbarItem ("Filtres", null, new Action (async delegate() {
-				FilterSelection page = new FilterSelection (this) { BindingContext = Filters };
+			ToolbarItems.Add (new ToolbarItem ("Filtres", null, new Action (async delegate {
+				FilterSelection page = new FilterSelection (this) {
+					BindingContext = Filters
+				};
 				await Navigation.PushModalAsync (new NavigationPage (page), true);
-				DisplayContent (Data);
-			}), 0, 0));
+				DisplayContent (data);
+			})));
 
-			List<Calendar> calendar = (List<Calendar>)Data;
+			List<Calendar> calendar = (List<Calendar>)data;
 			EventSorting sorted = new EventSorting (Filters, calendar);
 
 			ListView listView = new ListView {
@@ -60,11 +58,11 @@ namespace Epitech.Intra.SharedApp.Views
 				IsGroupingEnabled = true,
 				ItemsSource = sorted.GetGroupedList ()
 			};
-			listView.Refreshing += async (object sender, EventArgs e) => {
+			listView.Refreshing += async (sender, e) => {
 				await RefreshData (true);
 				listView.IsRefreshing = false;
 			};
-			listView.ItemSelected += async (object sender, SelectedItemChangedEventArgs e) => {
+			listView.ItemSelected += async (sender, e) => {
 				if (e.SelectedItem != null) {
 					await Navigation.PushAsync (new Activity ((Calendar)e.SelectedItem));
 					((ListView)sender).SelectedItem = null;

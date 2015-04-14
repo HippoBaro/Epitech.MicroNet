@@ -1,10 +1,9 @@
 ﻿using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
-using Epitech.Intra.iOS;
 using Epitech.Intra.SharedApp;
 
-[assembly: ExportRenderer(typeof(CircleImage), typeof(CircleImageRenderer))]
+[assembly: ExportRenderer (typeof(CircleImage), typeof(CircleImageRenderer))]
 namespace XLabs.Forms.Controls
 {
 	using System;
@@ -25,14 +24,14 @@ namespace XLabs.Forms.Controls
 		/// Called when [element changed].
 		/// </summary>
 		/// <param name="e">The e.</param>
-		protected override void OnElementChanged(ElementChangedEventArgs<Image> e)
+		protected override void OnElementChanged (ElementChangedEventArgs<Image> e)
 		{
-			base.OnElementChanged(e);
+			base.OnElementChanged (e);
 
-			if (Control == null || e.OldElement != null || Element == null || Element.Aspect != Aspect.Fill )
+			if (Control == null || e.OldElement != null || Element == null || Element.Aspect != Aspect.Fill)
 				return;
 
-			var min = Math.Min(Element.Width, Element.Height);
+			var min = Math.Min (Element.Width, Element.Height);
 			Control.Layer.CornerRadius = (float)(min / 2.0);
 			Control.Layer.MasksToBounds = false;
 			Control.ClipsToBounds = true;
@@ -43,26 +42,22 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		protected override void OnElementPropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
-			base.OnElementPropertyChanged(sender, e);
+			base.OnElementPropertyChanged (sender, e);
 
-			if (Control == null) return;
+			if (Control == null)
+				return;
 
-			if (Element.Aspect == Aspect.Fill)
-			{
+			if (Element.Aspect == Aspect.Fill) {
 				if (e.PropertyName == VisualElement.HeightProperty.PropertyName ||
-					e.PropertyName == VisualElement.WidthProperty.PropertyName)
-				{
-					DrawFill();               
+				    e.PropertyName == VisualElement.WidthProperty.PropertyName) {
+					DrawFill ();               
 				}
-			}
-			else
-			{
+			} else {
 				if (e.PropertyName == Image.IsLoadingProperty.PropertyName
-					&& !Element.IsLoading && Control.Image != null)
-				{
-					DrawOther();
+				    && !Element.IsLoading && Control.Image != null) {
+					DrawOther ();
 				}
 			}
 		}
@@ -71,48 +66,47 @@ namespace XLabs.Forms.Controls
 		/// Draws the other.
 		/// </summary>
 		/// <exception cref="System.NotImplementedException"></exception>
-		private void DrawOther()
+		void DrawOther ()
 		{
 			int height;
 			int width;
 
-			switch (Element.Aspect)
-			{
+			switch (Element.Aspect) {
 			case Aspect.AspectFill:
 				height = (int)Control.Image.Size.Height;
 				width = (int)Control.Image.Size.Width;
-				height = MakeSquare(height, ref width);
+				height = MakeSquare (height, ref width);
 				break;
 			case Aspect.AspectFit:
 				height = (int)Control.Image.Size.Height;
 				width = (int)Control.Image.Size.Width;
-				height = MakeSquare(height, ref width);
+				height = MakeSquare (height, ref width);
 				break;
 			default:
-				throw new NotImplementedException();
+				throw new NotImplementedException ();
 			}
 
 			UIImage image = Control.Image;
-			var clipRect = new CGRect(0, 0, width, height);
-			var scaled = image.Scale(new CGSize(width, height));
-			UIGraphics.BeginImageContextWithOptions(new CGSize(width, height), false, 0f);
-			UIBezierPath.FromRoundedRect(clipRect, Math.Max(width, height) / 2).AddClip();
+			var clipRect = new CGRect (0, 0, width, height);
+			var scaled = image.Scale (new CGSize (width, height));
+			UIGraphics.BeginImageContextWithOptions (new CGSize (width, height), false, 0f);
+			UIBezierPath.FromRoundedRect (clipRect, Math.Max (width, height) / 2).AddClip ();
 
-			scaled.Draw(new CGRect(0, 0, scaled.Size.Width, scaled.Size.Height));
-			UIImage final = UIGraphics.GetImageFromCurrentImageContext();
-			UIGraphics.EndImageContext();
+			scaled.Draw (new CGRect (0, 0, scaled.Size.Width, scaled.Size.Height));
+			UIImage final = UIGraphics.GetImageFromCurrentImageContext ();
+			UIGraphics.EndImageContext ();
 			Control.Image = final;
 		}
 
 		/// <summary>
 		/// Draws the fill.
 		/// </summary>
-		private void DrawFill()
+		void DrawFill ()
 		{
-			double min = Math.Min(Element.Width, Element.Height);
+			double min = Math.Min (Element.Width, Element.Height);
 			Control.Layer.CornerRadius = (float)(min / 2.0);
 			Control.Layer.BorderWidth = 2;
-			Control.Layer.BorderColor = IntraColor.LightBlue.ToCGColor();
+			Control.Layer.BorderColor = IntraColor.LightBlue.ToCGColor ();
 			Control.Layer.MasksToBounds = false;
 			Control.ClipsToBounds = true;
 		}
@@ -123,14 +117,11 @@ namespace XLabs.Forms.Controls
 		/// <param name="height">The height.</param>
 		/// <param name="width">The width.</param>
 		/// <returns>System.Int32.</returns>
-		private int MakeSquare(int height, ref int width)
+		static int MakeSquare (int height, ref int width)
 		{
-			if (height < width)
-			{
+			if (height < width) {
 				width = height;
-			}
-			else
-			{
+			} else {
 				height = width;
 			}
 			return height;

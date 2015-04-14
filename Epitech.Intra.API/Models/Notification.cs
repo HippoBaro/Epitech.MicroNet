@@ -7,36 +7,36 @@ namespace Epitech.Intra.API.Data
 	public class NotifUser
 	{
 		[JsonProperty ("picture")]
-		public string picture { get; set; }
+		public string Picture { get; set; }
 
 		[JsonProperty ("title")]
-		public string title { get; set; }
+		public string Title { get; set; }
 
 		[JsonProperty ("url")]
-		public string url { get; set; }
+		public string Url { get; set; }
 	}
 
 	public class Notification
 	{
 		[JsonProperty ("title")]
-		public string title { get; set; }
+		public string Title { get; set; }
 
 		[JsonProperty ("user")]
-		public NotifUser user { get; set; }
+		public NotifUser User { get; set; }
 
 		[JsonProperty ("content")]
-		public string content { get; set; }
+		public string Content { get; set; }
 
 		[JsonProperty ("date")]
-		public DateTime date { get; set; }
+		public DateTime Date { get; set; }
 
-		public List<Epitech.Intra.API.HTMLCleaner.LinkItem> Links {
+		public List<HTMLCleaner.LinkItem> Links {
 			get {
-				return Epitech.Intra.API.HTMLCleaner.GetLinks (title); 
+				return HTMLCleaner.GetLinks (Title); 
 			}
 		}
 
-		public bool unread { get; set; }
+		public bool Unread { get; set; }
 	}
 }
 

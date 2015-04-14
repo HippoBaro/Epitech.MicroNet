@@ -1,9 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
-using Epitech.Intra.API.Data.WelcomeJsonTypes;
 using System.Collections.Generic;
-using Epitech.Intra.API.Data;
 using System.Linq;
 
 namespace Epitech.Intra.SharedApp.Views
@@ -26,19 +24,19 @@ namespace Epitech.Intra.SharedApp.Views
 		{
 			TimeSpan timerest = proj.End - DateTime.Now;
 
-			Name = new Label () {
+			Name = new Label {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				FontSize = Device.GetNamedSize (NamedSize.Large, typeof(Label)),
 				Text = proj.Title
 			};
 
-			Desc = new Label () {
+			Desc = new Label {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				FontSize = Device.GetNamedSize (NamedSize.Micro, typeof(Label)),
-				Text = "Debut : " + proj.Begin.ToString () + Environment.NewLine
-				     + "Fin :      " + proj.End.ToString ()
+				Text = "Debut : " + proj.Begin + Environment.NewLine
+				+ "Fin :      " + proj.End
 			};
 
 			var start = proj.Begin;
@@ -46,24 +44,24 @@ namespace Epitech.Intra.SharedApp.Views
 			var total = (end - start).Ticks;
 			var percentage = (DateTime.Now - start).Ticks * 100 / total;
 
-			StackLayout time = new StackLayout () {
+			StackLayout time = new StackLayout {
 				Orientation = StackOrientation.Vertical,
 				Children = {
-					new ProgressBar () {
+					new ProgressBar {
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.FillAndExpand,
 						Progress = (double)percentage / 100f
 					},
-					new Label () {
+					new Label {
 						HorizontalOptions = LayoutOptions.Start,
 						VerticalOptions = LayoutOptions.CenterAndExpand,
 						FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
-						Text = ( proj.End > DateTime.Now ) ? "Temps restant : " + timerest.Days + " j, " + timerest.Hours + " h et " + timerest.Minutes + " mim" : "Projet terminé le : " + proj.Begin.ToString()
+						Text = (proj.End > DateTime.Now) ? "Temps restant : " + timerest.Days + " j, " + timerest.Hours + " h et " + timerest.Minutes + " mim" : "Projet terminé le : " + proj.Begin
 					},
 				}
 			};
 
-			StackLayout root = new StackLayout () {
+			StackLayout root = new StackLayout {
 				HorizontalOptions = LayoutOptions.Fill,
 				VerticalOptions = LayoutOptions.FillAndExpand,
 				Orientation = StackOrientation.Vertical,
@@ -77,9 +75,9 @@ namespace Epitech.Intra.SharedApp.Views
 
 	public class Projets : IntraPage
 	{
-		public Projets()
+		public Projets ()
 		{
-			InitIntraPage (typeof(Projets), App.API.GetProjects, new TimeSpan(1, 0, 0));
+			InitIntraPage (typeof(Projets), App.API.GetProjects, new TimeSpan (1, 0, 0));
 		}
 
 		protected override async void OnAppearing ()
@@ -91,15 +89,15 @@ namespace Epitech.Intra.SharedApp.Views
 			await RefreshData (false);
 		}
 
-		public override void DisplayContent (object Data)
+		public override void DisplayContent (object data)
 		{
-			base.DisplayContent (Data);
+			base.DisplayContent (data);
 
-			List<API.Data.Project> projects = ((List<API.Data.Project>)Data);
+			List<API.Data.Project> projects = ((List<API.Data.Project>)data);
 
 			var listView = new ListView {
 				ItemTemplate = new DataTemplate (typeof(ProjectCell)),
-				ItemsSource = projects.FindAll(x => x.UserProjectCode != null).OrderBy (x => x.End),
+				ItemsSource = projects.FindAll (x => x.UserProjectCode != null).OrderBy (x => x.End),
 				HasUnevenRows = true,
 				IsPullToRefreshEnabled = true
 			};
@@ -111,7 +109,7 @@ namespace Epitech.Intra.SharedApp.Views
 				}
 			};
 
-			listView.Refreshing += async (object sender, EventArgs e) => {
+			listView.Refreshing += async (sender, e) => {
 				await RefreshData (true);
 				listView.IsRefreshing = false;
 			};

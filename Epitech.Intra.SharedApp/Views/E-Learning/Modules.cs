@@ -3,42 +3,41 @@
 using Xamarin.Forms;
 using System.Collections.Generic;
 using Epitech.Intra.API.Data;
-using System.Linq;
 
 namespace Epitech.Intra.SharedApp.Views
 {
-	public class Modules : IntraPage
+	public sealed class Modules : IntraPage
 	{
-		public Modules(ELearning Semester)
+		public Modules (ELearning semester)
 		{
 			try {
-				DisplayContent(Semester);
+				DisplayContent (semester);
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}
 		}
 
-		public void DisplayContent (ELearning Semester)
+		public void DisplayContent (ELearning semester)
 		{
 			base.DisplayContent (Data);
 
-			Title = "Semestre " + Semester.semester.ToString();
-			var modules = new List<ModuleElearning>(Semester.dic.Values);
+			Title = "Semestre " + semester.Semester;
+			var modules = new List<ModuleElearning> (semester.Dic.Values);
 
 			ListView list = new ListView {
 				ItemTemplate = new DataTemplate (typeof(TextCell)) {
 					Bindings = {
-						{ TextCell.TextProperty, new Binding ("title") },
+						{ TextCell.TextProperty, new Binding ("Title") },
 						{ TextCell.DetailProperty, new Binding ("InnerCount") { StringFormat = "{0} Cour(s) et TP(s)" } }
 					}
 				},
 				ItemsSource = modules
 			};
 
-			list.ItemSelected += async (object sender, SelectedItemChangedEventArgs e) => {
+			list.ItemSelected += async (sender, e) => {
 				if (e.SelectedItem == null)
 					return;
-				await Navigation.PushAsync (new Classes (((API.Data.ModuleElearning)e.SelectedItem)));
+				await Navigation.PushAsync (new Classes (((ModuleElearning)e.SelectedItem)));
 				list.SelectedItem = null;
 			};
 

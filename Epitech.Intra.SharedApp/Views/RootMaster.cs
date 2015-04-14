@@ -1,13 +1,12 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Epitech.Intra.SharedApp.Views
 {
 	public class MenuCell : ViewCell
 	{
-		private Tab element;
+		Tab element;
 
 		protected override void OnBindingContextChanged ()
 		{
@@ -16,21 +15,21 @@ namespace Epitech.Intra.SharedApp.Views
 			base.OnBindingContextChanged ();
 		}
 
-		private void DrawCell ()
+		void DrawCell ()
 		{
-			var root = new StackLayout () {
+			var root = new StackLayout {
 				Orientation = StackOrientation.Horizontal,
 				Padding = new Thickness (10, 5, 10, 5)
 			};
 
-			Image Img = new Image () {
-				Source = ImageSource.FromFile(element.Image),
+			Image Img = new Image {
+				Source = ImageSource.FromFile (element.Image),
 				VerticalOptions = LayoutOptions.Center,
 				HeightRequest = 40,
 				WidthRequest = 40
 			};
 
-			StackLayout Main = new StackLayout () {
+			StackLayout Main = new StackLayout {
 				Padding = new Thickness (10, 0, 0, 0),
 				Spacing = -2,
 				HorizontalOptions = LayoutOptions.Fill,
@@ -38,7 +37,7 @@ namespace Epitech.Intra.SharedApp.Views
 				Orientation = StackOrientation.Vertical,
 			};
 
-			Label name = new Label () {
+			Label name = new Label {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				FontSize = Device.GetNamedSize (NamedSize.Large, typeof(Label)),
@@ -51,7 +50,7 @@ namespace Epitech.Intra.SharedApp.Views
 				name.TextColor = Color.FromHex ("FF8080");
 			}
 
-			Label desc = new Label () {
+			Label desc = new Label {
 				HorizontalOptions = LayoutOptions.Start,
 				VerticalOptions = LayoutOptions.CenterAndExpand,
 				FontSize = Device.GetNamedSize (NamedSize.Micro, typeof(Label)),
@@ -71,14 +70,17 @@ namespace Epitech.Intra.SharedApp.Views
 		}
 	}
 
-	public class Disconnection : IntraPage { }
+	public class Disconnection : IntraPage
+	{
+
+	}
 
 	public class RootMaster : MasterDetailPage
 	{
-		public static List<Tab> MenuTabs = new List<Tab>();
-		public ListView listView;
+		public static List<Tab> MenuTabs = new List<Tab> ();
+		public ListView ListView;
 
-		public void CreateChidrens()
+		public static void CreateChidrens ()
 		{
 			MenuTabs.Clear ();
 			GC.Collect ();
@@ -119,77 +121,72 @@ namespace Epitech.Intra.SharedApp.Views
 
 		public RootMaster ()
 		{
-			this.IsPresented = false;
-			if (Device.Idiom == TargetIdiom.Phone)
-				this.MasterBehavior = MasterBehavior.SplitOnLandscape;
-			else
-				this.MasterBehavior = MasterBehavior.Split;
+			IsPresented = false;
+			MasterBehavior = Device.Idiom == TargetIdiom.Phone ? MasterBehavior.SplitOnLandscape : MasterBehavior.Split;
 
-			this.Master = new ContentPage {
+			Master = new ContentPage {
 				BackgroundColor = IntraColor.DarkGray,
 				Title = "Menu",
-				Icon = new FileImageSource () { File = "menu24.png" }
+				Icon = new FileImageSource { File = "menu24.png" }
 			};
-			this.Detail = new Page();
+			Detail = new Page ();
 		}
 
-		private async void Disconnect ()
+		async void Disconnect ()
 		{
 			string[] addbut = new string[1];
 			string action = await DisplayActionSheet ("Voulez-vous vraiment vous déconnecter ?" + Environment.NewLine + "Les données ne seront plus synchronisés.", "Annuler", "Me déconnecter", addbut);
 			if (action == "Me déconnecter") {
-				this.IsPresented = false;
+				IsPresented = false;
 				App.API.ForgetCredit ();
 				await DependencyService.Get<Security.ISecurity> ().DeleteItemAsync ();
-				((App)App.Current).IsUserConnected = false;
-				((App)App.Current).UserLogin = null;
-				((App)App.Current).User = null;
-				this.Detail = new Page ();
+				((App)Application.Current).IsUserConnected = false;
+				((App)Application.Current).UserLogin = null;
+				((App)Application.Current).User = null;
+				Detail = new Page ();
 				GC.Collect ();
-				((App)App.Current).DisplayLoginScreen();
+				((App)Application.Current).DisplayLoginScreen ();
 			}
 		}
 
-		public void DrawMenu()
+		public void DrawMenu ()
 		{	
-			listView = new ListView {
+			ListView = new ListView {
 				ItemTemplate = new DataTemplate (typeof(MenuCell)),
 				SeparatorVisibility = SeparatorVisibility.None,
 				ItemsSource = MenuTabs,
 				VerticalOptions = LayoutOptions.Start,
 				BackgroundColor = Color.Transparent,
 				HasUnevenRows = true,
-				Header = new MenuHeader(),
+				Header = new MenuHeader (),
 			};
 
-			listView.ItemSelected += (sender, args) => {
+			ListView.ItemSelected += (sender, args) => {
 				if (args.SelectedItem == null)
 					return;
-				if (((Tab)listView.SelectedItem).PageType == typeof(Disconnection))
-				{
-					Disconnect();
+				if (((Tab)ListView.SelectedItem).PageType == typeof(Disconnection)) {
+					Disconnect ();
 					return;
 				}
-				this.Detail = ((Tab)listView.SelectedItem).Nav;
-				listView.SelectedItem = null;
-				if (Device.Idiom == TargetIdiom.Phone)
-					this.IsPresented = false;
+				Detail = ((Tab)ListView.SelectedItem).Nav;
+				ListView.SelectedItem = null;
+				IsPresented &= Device.Idiom != TargetIdiom.Phone;
 			};
 
-			listView.SelectedItem = MenuTabs [0];
+			ListView.SelectedItem = MenuTabs [0];
 
-			this.Master = new ContentPage {
+			Master = new ContentPage {
 				BackgroundColor = IntraColor.DarkGray,
 				Title = "Menu",
-				Icon = new FileImageSource () { File = "menu24.png" },
-				Content = listView
+				Icon = new FileImageSource { File = "menu24.png" },
+				Content = ListView
 			};
 		}
 
-		public IntraPage JumpToPage(Type PageType)
+		public IntraPage JumpToPage (Type pageType)
 		{
 			foreach (var item in MenuTabs) {
-				if (item.PageType == PageType) {
+				if (item.PageType == pageType) {
 					Detail = new NavigationPage (item.Page);
 					return item.Page;
 				}
@@ -202,19 +199,19 @@ namespace Epitech.Intra.SharedApp.Views
 	{
 		public Tab (string name, Type page)
 		{
-			this.Name = name;
-			this.PageType = page;
+			Name = name;
+			PageType = page;
 
 			if (PageType == typeof(Profile)) {
 				string[] profilearg = new string[1];
-				profilearg [0] = App.API.login;
+				profilearg [0] = App.API.Login;
 				Page = (IntraPage)Activator.CreateInstance (PageType, profilearg);
 				Nav = new NavigationPage (Page);
-				Nav.Icon = new FileImageSource () { File = "menu.png" };
+				Nav.Icon = new FileImageSource { File = "menu.png" };
 			} else {
 				Page = (IntraPage)Activator.CreateInstance (PageType);
 				Nav = new NavigationPage (Page);
-				Nav.Icon = new FileImageSource () { File = "menu.png" };
+				Nav.Icon = new FileImageSource { File = "menu.png" };
 			}
 		}
 

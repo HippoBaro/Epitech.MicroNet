@@ -3,7 +3,6 @@
 using Xamarin.Forms;
 using Epitech.Intra.API.Data;
 using Epitech.Intra.API.Data.MarksJsonTypes;
-using System.Collections.Generic;
 
 namespace Epitech.Intra.SharedApp.Views
 {
@@ -12,23 +11,23 @@ namespace Epitech.Intra.SharedApp.Views
 		public Marks (UserMarks marks, Module module)
 		{
 			Note[] notes = Array.FindAll (marks.Notes, x => x.Codemodule == module.Codemodule);
-			Array.Sort (notes, (x, y) => String.Compare (x.Date, y.Date));
+			Array.Sort (notes, (x, y) => String.Compare (x.Date, y.Date, StringComparison.Ordinal));
 
 			Label comment = new Label ();
 
 			Title = "Notes pour " + module.Title;
 
-			Button but = new Button () {
+			Button but = new Button {
 				Text = "Afficher les autres notes",
 				TextColor = Color.White,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.End
 			};
 
-			StackLayout commentview = new StackLayout () {
+			StackLayout commentview = new StackLayout {
 				BackgroundColor = Color.Gray,
 				Children = {
-					new ScrollView () { Content = comment  },
+					new ScrollView { Content = comment  },
 					but
 				}
 			};
@@ -43,14 +42,14 @@ namespace Epitech.Intra.SharedApp.Views
 				ItemsSource = notes
 			};
 
-			list.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+			list.ItemSelected += (sender, e) => {
 				if (e.SelectedItem != null) {
 					commentview.IsVisible = true;
 					comment.Text = ((Note)e.SelectedItem).Comment;
 				}
 			};
 
-			but.Clicked += async (object sender, EventArgs e) => {
+			but.Clicked += async (sender, e) => {
 				await Navigation.PushAsync (new ActivityMarks ((Note)list.SelectedItem));
 				list.SelectedItem = null;
 			};
@@ -59,7 +58,7 @@ namespace Epitech.Intra.SharedApp.Views
 			if (notes.Length != 0)
 				root.Children.Add (list);
 			else {
-				root.Children.Add (new Label () {
+				root.Children.Add (new Label {
 					Text = "Aucune note disponible pour ce module",
 					HorizontalOptions = LayoutOptions.Center,
 					XAlign = TextAlignment.Center

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Net.Http;
 
 using Xamarin.Forms;
-
-using Epitech.Intra.API;
 using System.Threading.Tasks;
 using Xamarin;
 using System.Collections.Generic;
 using Epitech.Intra.API.Data;
-using Xamarin.Forms.Labs.Controls;
 using Epitech.Intra.SharedApp;
 
 namespace Epitech.Intra.SharedApp.Views
@@ -32,30 +28,29 @@ namespace Epitech.Intra.SharedApp.Views
 			}
 		}
 
-		private async void SelectLoginMethodAuto ()
+		async void SelectLoginMethodAuto ()
 		{
 			Security.Credit Credit = await DependencyService.Get<Security.ISecurity> ().GetItemAsync ();
 
 			if (Credit != null) {
-				if (await TryConnect (Credit) == false)
+				if (!await TryConnect (Credit))
 					await DependencyService.Get<Security.ISecurity> ().DeleteItemAsync ();
 			} else
 				DisplayContent ();
 		}
 
-		private async Task<bool> TryConnect (Security.Credit Credit)
+		async Task<bool> TryConnect (Security.Credit credit)
 		{
 			try {
-				if (await InitIntra (Credit.login, Credit.password)) {
-					await DependencyService.Get<Security.ISecurity> ().AddItemAsync (Credit);
-					await this.Navigation.PopModalAsync (true);
-					((MasterDetailPage)((App)App.Current).MainPage).IsPresented = true;
+				if (await InitIntra (credit.Login, credit.Password)) {
+					await DependencyService.Get<Security.ISecurity> ().AddItemAsync (credit);
+					await Navigation.PopModalAsync (true);
+					((MasterDetailPage)Application.Current.MainPage).IsPresented = true;
 					return true;
-				} else {
-					await DisplayAlert ("Connexion", "Verifier vos identifiants", "Ok");
-					DisplayContent ();
-					return false;
 				}
+				await DisplayAlert ("Connexion", "Verifier vos identifiants", "Ok");
+				DisplayContent ();
+				return false;
 			} catch (Exception ex) {
 				await DisplayAlert ("Connexion", ex.Message, "Ok");
 				DisplayContent ();
@@ -63,7 +58,7 @@ namespace Epitech.Intra.SharedApp.Views
 			}
 		}
 
-		private void DisplayContent ()
+		void DisplayContent ()
 		{
 			Entry login = new Entry {
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -75,44 +70,43 @@ namespace Epitech.Intra.SharedApp.Views
 				IsPassword = true,
 			};
 
-			EventSync = new Switch () {
-				IsToggled = ((App)App.Current).UserHasActivatedEventSync,
+			EventSync = new Switch {
+				IsToggled = ((App)Application.Current).UserHasActivatedEventSync,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Start,
 			};
 
-			Label EventSyncText = new Label () {
+			Label EventSyncText = new Label {
 				Text = "Activer la synchronisation des évènements",
 				FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Start
 			};
 
-			StackLayout EventProp = new StackLayout () {
+			StackLayout EventProp = new StackLayout {
 				Padding = new Thickness (5, 10, 5, 10),
 				Orientation = StackOrientation.Horizontal,
 				Children = { EventSync, EventSyncText }
 			};
 
-			login.Completed += (object sender, EventArgs e) => {
-				pass.Focus ();
-			};
+			login.Completed += (sender, e) => pass.Focus ();
 
-			pass.Completed += (object sender, EventArgs e) => {
-				pass.Unfocus ();
-			};
+			pass.Completed += (sender, e) => pass.Unfocus ();
 
 			Button ok = new Button {
 				Text = "Connexion",
-				Style = (Style)App.Current.Resources ["ButtonSkinned"],
+				Style = (Style)Application.Current.Resources ["ButtonSkinned"],
 				HorizontalOptions = LayoutOptions.End,
 				WidthRequest = 150
 			};
-			ok.Clicked += async (object sender, EventArgs e) => {
+			ok.Clicked += async (sender, e) => {
 				if (login.Text == null || pass.Text == null)
 					return;
-				((App)App.Current).UserHasActivatedEventSync = EventSync.IsToggled;
-				await TryConnect (new Security.Credit () { login = login.Text.Replace(" ", String.Empty), password = pass.Text.Replace(" ", String.Empty) });
+				((App)Application.Current).UserHasActivatedEventSync = EventSync.IsToggled;
+				await TryConnect (new Security.Credit {
+					Login = login.Text.Replace (" ", String.Empty),
+					Password = pass.Text.Replace (" ", String.Empty)
+				});
 			};
 			Content = new StackLayout {
 				HorizontalOptions = LayoutOptions.Fill,
@@ -127,9 +121,9 @@ namespace Epitech.Intra.SharedApp.Views
 			};
 		}
 
-		private async Task<bool> InitIntra (string login, string password)
+		async Task<bool> InitIntra (string login, string password)
 		{
-			Content = new ActivityIndicator () {
+			Content = new ActivityIndicator {
 				IsRunning = true,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center
@@ -139,16 +133,16 @@ namespace Epitech.Intra.SharedApp.Views
 			if (!res)
 				return res;
 
-			((App)App.Current).root.CreateChidrens ();
+			RootMaster.CreateChidrens ();
 			var handle = Insights.TrackTime ("TimeToLogin");
 			handle.Start ();
 
-			var progressbar = new ProgressBar () { WidthRequest = App.ScreenWidth - 100 };
-			var status = new Label () {
+			var progressbar = new ProgressBar { WidthRequest = App.ScreenWidth - 100 };
+			var status = new Label {
 				FontSize = Device.GetNamedSize (NamedSize.Medium, typeof(Label)),
 				XAlign = TextAlignment.Center
 			};
-			var root = new StackLayout () {
+			var root = new StackLayout {
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center,
 				Children = { status, progressbar }
@@ -161,20 +155,20 @@ namespace Epitech.Intra.SharedApp.Views
 				progressbar.Progress = double.Parse ((i).ToString ()) / double.Parse (RootMaster.MenuTabs.Count.ToString ());
 				if (i == 0) {
 					((Profile)RootMaster.MenuTabs [i].Page).TargetUser = login;
-					((App)App.Current).User = ((User)await RootMaster.MenuTabs [i].Page.SilentUpdate (login));
+					((App)Application.Current).User = ((User)await RootMaster.MenuTabs [i].Page.SilentUpdate (login));
 				} else {
 					await RootMaster.MenuTabs [i].Page.SilentUpdate (null);
 				}
 			}
 
-			((App)App.Current).root.DrawMenu ();
+			((App)Application.Current).Root.DrawMenu ();
 
 			progressbar.Progress = 1;
 			status.Text = "On y est presque...";
 			await Task.Delay (500);
-			((Profile)RootMaster.MenuTabs [0].Page).DisplayContent (((Profile)RootMaster.MenuTabs [0].Page).Data);
+			((Profile)RootMaster.MenuTabs [0].Page).DisplayContent (RootMaster.MenuTabs [0].Page.Data);
 
-			var user = ((API.Data.User)((((Profile)RootMaster.MenuTabs [0].Page).Data)));
+			var user = ((User)((RootMaster.MenuTabs [0].Page.Data)));
 
 			var traits = new Dictionary<string, string> {
 				{ Insights.Traits.Email, user.InternalEmail },
