@@ -13,7 +13,16 @@ namespace Epitech.Intra.iOS
 {
 	public class EventManagerIOS : IEventManagerIOS
 	{
-		public static EKEventStore EventStore;
+		static protected EKEventStore eventStore;
+
+		static public EKEventStore EventStore {
+			get {
+				if (eventStore == null)
+					eventStore = new EKEventStore ();
+				return eventStore; 
+			}
+		}
+
 		const string CalendarIDKey = "CalendarIdForEventSynch";
 
 		public static EKCalendar Calendar {
@@ -22,7 +31,7 @@ namespace Epitech.Intra.iOS
 				if (val == null) {
 					return CreateNewCalendar ();
 				} else {
-					foreach (var item in EventStore.Calendars) {
+					foreach (var item in EventStore.GetCalendars(EKEntityType.Event)) {
 						if (item.CalendarIdentifier == val)
 							return item;
 					}
@@ -60,17 +69,19 @@ namespace Epitech.Intra.iOS
 
 		public async void SynchrosizeCalendar (List<Calendar> events)
 		{
-			try {
+			if ((((App)Xamarin.Forms.Application.Current).HasAllowedEventKit) && (((App)Xamarin.Forms.Application.Current).UserHasActivatedEventSync)) {
 				await Task.Factory.StartNew (new Action (() => {
-					if ((((App)Xamarin.Forms.Application.Current).HasAllowedEventKit) || (((App)Xamarin.Forms.Application.Current).UserHasActivatedEventSync)) {
+					try {
 						SelectUnregisteredEvents (events);
 						RegisterEvents (events);
 						DeleteUnregisteredEvent (events);
+					} catch (Exception ex) {
+						Xamarin.Insights.Report (ex);
+						return;
 					}
 				}));
-			} catch (Exception ex) {
-				Xamarin.Insights.Report (ex);
 			}
+			return;
 		}
 
 		public static void RegisterEvents (List<Calendar> events)
@@ -105,7 +116,7 @@ namespace Epitech.Intra.iOS
 				return;
 			EKEvent[] todelete = Array.FindAll (queryresult, x => {
 				foreach (var item in events) {
-					if (item.EventKitID == x.EventIdentifier)
+					if (item.EventKitID == x.EventIdentifier || item.Past)
 						return false;
 				}
 				return true;

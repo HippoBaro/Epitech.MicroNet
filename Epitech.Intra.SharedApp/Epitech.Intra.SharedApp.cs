@@ -3,6 +3,7 @@
 using Epitech.Intra.SharedApp.Views;
 using Epitech.Intra.API;
 using Epitech.Intra.API.Data;
+using StoreRating.Forms.Plugin.Abstractions;
 
 namespace Epitech.Intra.SharedApp
 {
@@ -50,6 +51,12 @@ namespace Epitech.Intra.SharedApp
 
 		public App ()
 		{
+			StoreRatingControl.AppName = "Epitech MicroNet";
+			StoreRatingControl.FeedbackEmail = "hippolyte.barraud@epitech.eu";
+			StoreRatingControl.AppID = "985868775";
+			StoreRatingControl.Preview = true;
+			StoreRatingControl.IncUsage ();
+
 			API = new APIIndex ();
 			SetGlobalStyles ();
 			MainPage = Root = new RootMaster ();

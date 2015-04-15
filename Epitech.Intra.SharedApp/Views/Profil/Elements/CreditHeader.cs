@@ -44,13 +44,13 @@ namespace Epitech.Intra.SharedApp
 			};
 
 			StackLayout Credit = new StackLayout {
-				HorizontalOptions = LayoutOptions.Fill,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
 					new Label {
 						XAlign = TextAlignment.Center,
 						Text = "Crédit acquis : " + user.Credits,
-						HorizontalOptions = LayoutOptions.Fill,
+						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,
 						FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
 						TextColor = Color.White,
@@ -59,7 +59,7 @@ namespace Epitech.Intra.SharedApp
 						XAlign = TextAlignment.Center,
 						Text = "En cours d'acquisition : " + CalcCreditGoal (user),
 						FontSize = Device.GetNamedSize (NamedSize.Small, typeof(Label)),
-						HorizontalOptions = LayoutOptions.Fill,
+						HorizontalOptions = LayoutOptions.Center,
 						VerticalOptions = LayoutOptions.Center,
 						TextColor = Color.White,
 					}

@@ -31,7 +31,9 @@ namespace Epitech.Intra.SharedApp.Views
 			userlogin = userlogin.Remove (userlogin.Length - 1, 1);
 
 			Image Img = new Image {
-				Source = API.PictureHelper.GetUserPictureUri (noti.User.Picture, userlogin, Epitech.Intra.API.PictureHelper.PictureSize.Light)
+				Source = API.PictureHelper.GetUserPictureUri (noti.User.Picture, userlogin, Epitech.Intra.API.PictureHelper.PictureSize.Light),
+				HeightRequest = 80,
+				WidthRequest = 80
 			};
 
 			StackLayout Main = new StackLayout {

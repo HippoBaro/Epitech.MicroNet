@@ -21,13 +21,10 @@ namespace Epitech.Intra.iOS
 		{
 			Forms.Init ();
 			global::Xamarin.Forms.Forms.Init ();
-			UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
 
 			MainApp = new App ();
 
 			LoadApplication (MainApp);
-
-			EventManagerIOS.EventStore = new EKEventStore ();
 
 			EventManagerIOS.EventStore.RequestAccess (EKEntityType.Event, (granted, e) => {
 				MainApp.HasAllowedEventKit = granted;
@@ -38,6 +35,8 @@ namespace Epitech.Intra.iOS
 
 			UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval (UIApplication.BackgroundFetchIntervalMinimum);
 			UIApplication.SharedApplication.RegisterUserNotificationSettings (UIUserNotificationSettings.GetSettingsForTypes (UIUserNotificationType.Badge | UIUserNotificationType.Alert, null));
+
+			UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
 
 			if (launchOptions != null) {
 				if (launchOptions.ContainsKey (UIApplication.LaunchOptionsLocalNotificationKey)) {

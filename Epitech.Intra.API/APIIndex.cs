@@ -231,9 +231,6 @@ namespace Epitech.Intra.API
 				if (!result.IsSuccessStatusCode)
 					return null;
 				list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Calendar>> (await result.Content.ReadAsStringAsync ());
-
-				result = await client.PostAsync (buildUri ("/"), GetHeader ());
-				Welcome tokentest = Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ());
 			} catch {
 				throw new Exception ("Impossible de récuperer les informations du calendrier.");
 			}
@@ -340,7 +337,7 @@ namespace Epitech.Intra.API
 				List<Files> root = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>> (await result.Content.ReadAsStringAsync ());
 				resultlist.AddRange (root);
 				foreach (var item in root) {
-					if (item.TypeOfFile == "d") {
+					if (item.Type == "d") {
 						result = await client.PostAsync (buildUri ("/module/" + project.Scolaryear + "/" + project.Codemodule + "/" + project.Codeinstance + "/" + project.Codeacti + "/project/file/" + item.Slug + "/"), GetHeader ());
 						List<Files> toAppend = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Files>> (await result.Content.ReadAsStringAsync ());
 						resultlist.AddRange (toAppend);
