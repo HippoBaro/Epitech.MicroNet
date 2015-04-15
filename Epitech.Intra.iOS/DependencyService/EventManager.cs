@@ -83,7 +83,7 @@ namespace Epitech.Intra.iOS
 				newEvent.EndDate = DateTimeToNSDate (item.End).AddSeconds (-(3600 * 2));
 				newEvent.Title = item.ActiTitle;
 				newEvent.Availability = EKEventAvailability.Busy;
-				newEvent.Location = item.Room.Code;
+				newEvent.Location = item.Room.Code ?? String.Empty;
 				newEvent.Notes = "Type : " + item.TypeTitle + Environment.NewLine + "Module : " + item.Titlemodule;
 				newEvent.Calendar = Calendar;
 				NSError e;
@@ -133,13 +133,12 @@ namespace Epitech.Intra.iOS
 					continue;
 				}
 				foreach (var evt in queryresult) {
-					if (evt.Location == item.Room.Code && evt.Title == item.ActiTitle) {
+					if (evt.Location == (item.Room.Code ?? String.Empty) && evt.Title == item.ActiTitle) {
 						exist = true;
 						item.EventKitID = evt.EventIdentifier;
 					}
 				}
-				if (!exist)
-					throw new Exception ("Select failed");
+				item.RegisterEventForStoring |= !exist;
 			}
 		}
 

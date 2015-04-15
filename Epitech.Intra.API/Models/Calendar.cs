@@ -137,7 +137,7 @@ namespace Epitech.Intra.API.Data
 		[JsonProperty ("allow_token")]
 		public bool AllowToken { get; set; }
 
-		public bool TokenAsked { get; set; }
+		public bool TokenAsked { get { return AllowToken && EventRegistered == "registered"; } }
 
 		[JsonProperty ("register_student")]
 		public bool RegisterStudent { get; set; }

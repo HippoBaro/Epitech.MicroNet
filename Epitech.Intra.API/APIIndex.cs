@@ -201,66 +201,24 @@ namespace Epitech.Intra.API
 			return user;
 		}
 
-		static void DetectTokenAsked (List<Calendar> list, Welcome tokentest)
+		public async Task<TokenResponse> TryValidateToken (Calendar activity, Token token)
 		{
-			Activite[] token = Array.FindAll (tokentest.Board.Activites, x => x.Token != null);
+			HttpClient client = new HttpClient ();
 
-			foreach (var item in token) {
-				int i;
-				string year;
-				string module;
-				string instance;
-				string activity;
-				Calendar target = null;
+			try {
+				var head = new List<KeyValuePair<string,string>> ();
+				head.Add (new KeyValuePair<string, string> ("token", token.TokenValue));
+				head.Add (new KeyValuePair<string, string> ("rate", token.Rate.ToString ()));
+				head.Add (new KeyValuePair<string, string> ("comment", token.Comment));
+				head.Add (new KeyValuePair<string, string> ("login", Login));
+				head.Add (new KeyValuePair<string, string> ("password", password));
+				head.Add (new KeyValuePair<string, string> ("rememberme", "on"));
 
-				string temp = item.TokenLink;
-
-				if (!temp.StartsWith ("/module/", StringComparison.Ordinal))
-					continue;
-				temp = temp.Remove (0, 8);
-				year = temp.Substring (0, 4);
-				temp = temp.Remove (0, 5);
-				for (i = 0; i < temp.Length; i++) {
-					if (temp [i] == '/')
-						break;
-				}
-				module = temp.Substring (0, i);
-				temp = temp.Remove (0, i + 1);
-				for (i = 0; i < temp.Length; i++) {
-					if (temp [i] == '/')
-						break;
-				}
-				instance = temp.Substring (0, i);
-				temp = temp.Remove (0, i + 1);
-				for (i = 0; i < temp.Length; i++) {
-					if (temp [i] == '/')
-						break;
-				}
-				activity = temp.Substring (0, i);
-
-				List<Calendar> Activities = (list).FindAll (x => x.Scolaryear == year && x.Codemodule == module && x.Codeinstance == instance && x.Codeacti == activity);
-				Activities = Activities.FindAll (x => x.EventRegistered != null);
-
-				if (Activities.Count == 0)
-					Activities = (list).FindAll (x => x.Scolaryear == year && x.Codemodule == module && x.Codeinstance == instance && x.Codeacti == activity);
-
-				if (Activities.Count == 0)
-					return;
-
-				foreach (var acti in Activities) {
-					if (acti.EventRegistered == "present")
-						target = acti;
-				}
-
-				if (target == null) {
-					foreach (var acti in Activities) {
-						if (acti.EventRegistered != null)
-							target = acti;
-					}
-				}
-				target.TokenAsked = true;
+				var result = await client.PostAsync (buildUri ("/module/" + activity.Scolaryear + "/" + activity.Codemodule + "/" + activity.Codeinstance + "/" + activity.Codeacti + "/" + activity.Codeevent + "/token"), new FormUrlEncodedContent (head));
+				return Newtonsoft.Json.JsonConvert.DeserializeObject<TokenResponse> (await result.Content.ReadAsStringAsync ());
+			} catch (Exception ex) {
+				throw ex;
 			}
-			return;
 		}
 
 		public async Task<object> GetCalendar ()
@@ -276,7 +234,6 @@ namespace Epitech.Intra.API
 
 				result = await client.PostAsync (buildUri ("/"), GetHeader ());
 				Welcome tokentest = Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ());
-				DetectTokenAsked (list, tokentest);
 			} catch {
 				throw new Exception ("Impossible de récuperer les informations du calendrier.");
 			}

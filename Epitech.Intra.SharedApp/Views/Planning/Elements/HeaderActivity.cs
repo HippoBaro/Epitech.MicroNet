@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Epitech.Intra.API.Data;
 using System.Collections.Generic;
 
@@ -10,12 +8,13 @@ namespace Epitech.Intra.SharedApp
 	{
 		readonly Button ButtonRegister;
 
-		public HeaderActivity (Calendar eventSelected)
+		public HeaderActivity (Calendar eventSelected, bool displayActionButton)
 		{
 			ButtonRegister = new Button {
 				HorizontalOptions = LayoutOptions.End,
 				Style = (Style)Application.Current.Resources ["ButtonSkinned"],
-				WidthRequest = 100
+				WidthRequest = 150,
+				IsVisible = displayActionButton
 			};
 
 			ButtonRegister.Text = eventSelected.EventRegistered != null ? "Se désinscrire" : "S'inscrire";
@@ -76,7 +75,7 @@ namespace Epitech.Intra.SharedApp
 
 		private async void PromptToken (Calendar eventSelected)
 		{
-			
+			await Navigation.PushModalAsync (new NavigationPage (new Token (eventSelected)));
 		}
 
 		private async void RegisterUnregister (Calendar eventSelected)

@@ -65,16 +65,24 @@ namespace Epitech.Intra.SharedApp.Views
 
 	public sealed class Activity : IntraPage
 	{
+		readonly Calendar CurrentActivity;
+
 		public Activity (Calendar activity)
 		{
+			CurrentActivity = activity;
 			Title = activity.ActiTitle;
 			Content = new ActivityIndicator {
 				IsRunning = true,
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center
 			};
+		}
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
 			try {
-				DisplayContent (activity);
+				DisplayContent (CurrentActivity);
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}
@@ -90,7 +98,7 @@ namespace Epitech.Intra.SharedApp.Views
 				var list = new ListView {
 					ItemTemplate = new DataTemplate (typeof(PresenceCell)),
 					ItemsSource = registeredStud,
-					Header = new HeaderActivity (activity),
+					Header = new HeaderActivity (activity, true),
 					HasUnevenRows = true,
 				};
 
@@ -113,7 +121,6 @@ namespace Epitech.Intra.SharedApp.Views
 				};
 				root.Children.Add (message);
 			}
-				
 			Content = root;
 		}
 	}
