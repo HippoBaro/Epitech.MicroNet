@@ -249,6 +249,8 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%402x.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%403x.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default%404x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-57.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-114.png" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
