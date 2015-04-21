@@ -3,6 +3,8 @@
 using Xamarin.Forms;
 using System.Linq;
 using Epitech.Intra.SharedApp;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Epitech.Intra.SharedApp.Views
 {
@@ -68,6 +70,7 @@ namespace Epitech.Intra.SharedApp.Views
 	public sealed class Trombi : IntraPage
 	{
 		ListView list;
+		System.Threading.CancellationTokenSource token;
 
 		public Trombi ()
 		{
@@ -105,13 +108,16 @@ namespace Epitech.Intra.SharedApp.Views
 		public async void Search (string searchval)
 		{
 			try {
+				if (token != null)
+					token.Cancel ();
 				if (searchval.Length > 2) {
 					IsBusy = true;
+					token = new System.Threading.CancellationTokenSource ();
 					list.ItemsSource = (await App.API.GetSearchResult (searchval)).OrderBy (q => q.FullName);
 					IsBusy = false;
 				} else
 					list.ItemsSource = null;
-			} catch {
+			} catch (Exception ex) {
 				list.ItemsSource = null;
 			}
 		}

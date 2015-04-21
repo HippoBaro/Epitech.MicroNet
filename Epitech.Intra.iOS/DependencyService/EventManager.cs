@@ -116,7 +116,7 @@ namespace Epitech.Intra.iOS
 				return;
 			EKEvent[] todelete = Array.FindAll (queryresult, x => {
 				foreach (var item in events) {
-					if (item.EventKitID == x.EventIdentifier || item.Past)
+					if (item.EventKitID == x.EventIdentifier || x.StartDate.SecondsSinceReferenceDate < NSDate.Now.SecondsSinceReferenceDate)
 						return false;
 				}
 				return true;

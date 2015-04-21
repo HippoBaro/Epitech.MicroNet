@@ -82,7 +82,7 @@ namespace Epitech.Intra.SharedApp.Views
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Start
 			};
-
+					
 			StackLayout EventProp = new StackLayout {
 				Padding = new Thickness (5, 10, 5, 10),
 				Orientation = StackOrientation.Horizontal,
@@ -114,11 +114,13 @@ namespace Epitech.Intra.SharedApp.Views
 				Padding = new Thickness (40, 0, 40, 20),
 				Children = {
 					login,
-					pass,
-					EventProp,
-					ok
+					pass
 				}
 			};
+
+			if (Device.OS == TargetPlatform.iOS)
+				((StackLayout)Content).Children.Add (EventProp);
+			((StackLayout)Content).Children.Add (ok);
 		}
 
 		async Task<bool> InitIntra (string login, string password)

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{8C128392-A804-43B8-BB7F-73BE15290A96}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Epitech.Intra.Droid</RootNamespace>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AssemblyName>Epitech.Intra.Droid.Droid</AssemblyName>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <ConsolePause>false</ConsolePause>
+    <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a;x86</AndroidSupportedAbis>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningKeyStore>/Users/hippolytebarraud/Desktop/MicroNet.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>Alpha748</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>MicroNet</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>Alpha748</AndroidSigningKeyPass>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\monoandroid\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\monoandroid\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Rivets">
+      <HintPath>..\packages\Rivets.1.0.5.0\lib\MonoAndroid10\Rivets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json" />
+    <Reference Include="Xamarin.Insights">
+      <HintPath>..\packages\Xamarin.Insights.1.9.1.107\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
+    </Reference>
+    <Reference Include="ExifLib">
+      <HintPath>..\packages\ExifLib.PCL.1.0.0\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.Android">
+      <HintPath>..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="FormsViewGroup">
+      <HintPath>..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml">
+      <HintPath>..\packages\Xamarin.Forms.1.4.1.6349\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Android.Support.v4">
+      <HintPath>..\packages\Xamarin.Android.Support.v4.22.0.0.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.2014.1.546\lib\OxyPlot.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DependencyService\Security.cs" />
+    <Compile Include="CustomRenderer\CircleImage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\layout\" />
+    <Folder Include="Resources\values\" />
+    <Folder Include="DependencyService\" />
+    <Folder Include="Resources\drawable-mdpi\" />
+    <Folder Include="CustomRenderer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logo_blue.png" />
+    <AndroidResource Include="Resources\drawable\menu24.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\logo_blue.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menu24.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menu24.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menu24.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\logo_blue.png" />
+    <AndroidResource Include="Resources\drawable\git_logo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\git_logo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\git_logo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\git_logo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconselearning.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\git_logo.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\logo_blue.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menu24.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconselearning.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconselearning.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconselearning.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconsnotifications.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconsnotifications.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconsnotifications.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconsnotifications.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconsinfo.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconsinfo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconsinfo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconsinfo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconsprofile.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconsprofile.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconsprofile.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconsprofile.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconsprojects.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconsprojects.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconsprojects.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconsprojects.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconsdisconnect.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconsdisconnect.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconsdisconnect.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconsdisconnect.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconscrowd.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconscrowd.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconscrowd.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconscrowd.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\menuiconscalendar.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\menuiconscalendar.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\menuiconscalendar.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\menuiconscalendar.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_launcher.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <ItemGroup>
+    <ProjectReference Include="..\Epitech.Intra.SharedApp\Epitech.Intra.SharedApp.csproj">
+      <Project>{17C331C4-670E-4088-B910-1C0741ECF258}</Project>
+      <Name>Epitech.Intra.SharedApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\oxyplot\Source\OxyPlot.Xamarin.Forms.Platform.Android\OxyPlot.Xamarin.Forms.Platform.Android.csproj">
+      <Project>{A40AD708-3FF5-42FC-92B0-8D93FF1DB58F}</Project>
+      <Name>OxyPlot.Xamarin.Forms.Platform.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\oxyplot\Source\OxyPlot.Xamarin.Android\OxyPlot.Xamarin.Android.csproj">
+      <Project>{E965BA32-9561-4E2A-ADB0-19487B25A939}</Project>
+      <Name>OxyPlot.Xamarin.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\oxyplot\Source\OxyPlot.Xamarin.Forms\OxyPlot.Xamarin.Forms.csproj">
+      <Project>{B63C5F8C-61C8-4E69-93D6-F49F816D3746}</Project>
+      <Name>OxyPlot.Xamarin.Forms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\drawable-xhdpi\logo_blue.png" />
+  </ItemGroup>
+</Project>

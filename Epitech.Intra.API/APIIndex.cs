@@ -130,75 +130,81 @@ namespace Epitech.Intra.API
 		*/
 		public async Task<bool> CreditialTest (string login, string password)
 		{
-			HttpClient client = new HttpClient ();
-
 			Login = login;
 			this.password = password;
 
-			try {
-				var result = await client.PostAsync (buildUri ("/"), GetHeader ());
-				return result.IsSuccessStatusCode;
-			} catch (Exception ex) {
-				throw ex;
-			}
+			return await Task.Run (async () => {
+				HttpClient client = new HttpClient ();
+
+				try {
+					var result = await client.PostAsync (buildUri ("/"), GetHeader ());
+					return result.IsSuccessStatusCode;
+				} catch (Exception ex) {
+					throw ex;
+				}
+			});
 		}
 
 		public async Task<Welcome> GetWelcome ()
 		{
-			HttpClient client = new HttpClient ();
+			return await Task.Run (async () => {
+				HttpClient client = new HttpClient ();
 
-			try {
-				var result = await client.PostAsync (buildUri ("/"), GetHeader ());
-				return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ());
-			} catch (Exception e) {
-				throw new Exception ("Erreur", e);
-			}
-
+				try {
+					var result = await client.PostAsync (buildUri ("/"), GetHeader ());
+					return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ());
+				} catch (Exception e) {
+					throw new Exception ("Erreur", e);
+				}
+			});
 		}
 
 		public async Task<object> GetUser (string login)
 		{
-			HttpClient client = new HttpClient ();
-			Data.User user;
+			return await Task.Run (async () => { 
+				HttpClient client = new HttpClient ();
+				Data.User user;
 
-			var result = await client.PostAsync (buildUri ("/user/" + login + "/"), GetHeader ());
-			if (!result.IsSuccessStatusCode)
-				return null;
-			try {
-				user = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.User> (await result.Content.ReadAsStringAsync ());
-			} catch {
-				throw new Exception ("Impossible de récuperer les information utilisateur. Ce compte est peut-être un compte spécial pas encore supporté par l'application.");
-			}
-
-			if (!user.Close && user.Nsstat != null) {
-				result = await client.PostAsync (buildUri ("/user/" + login + "/netsoul/"), GetHeader ());
+				var result = await client.PostAsync (buildUri ("/user/" + login + "/"), GetHeader ());
 				if (!result.IsSuccessStatusCode)
 					return null;
-				List<Double[]> test = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Double[]>> (await result.Content.ReadAsStringAsync ());
-				user.Netsoul = new List<Data.UserJsonTypes.NetsoulRawData> ();
-				foreach (var val in test) {
-					Data.UserJsonTypes.NetsoulRawData item = new Data.UserJsonTypes.NetsoulRawData ();
-					item.EpochTime = (int)val [0];
-					item.TimeActiveScool = val [1];
-					item.TimeIldleScool = val [2];
-					item.TimeActiveOut = val [3];
-					item.TimeIldleOut = val [4];
-					if (val.Count () > 5)
-						item.Average = val [5];
-					user.Netsoul.Add (item);
+				try {
+					user = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.User> (await result.Content.ReadAsStringAsync ());
+				} catch {
+					throw new Exception ("Impossible de récuperer les information utilisateur. Ce compte est peut-être un compte spécial pas encore supporté par l'application.");
 				}
-			}
 
-			result = await client.PostAsync (buildUri ("/user/" + login + "/notes/"), GetHeader ());
-			if (!result.IsSuccessStatusCode)
-				return null;
-			try {
-				user.Marks = Newtonsoft.Json.JsonConvert.DeserializeObject<UserMarks> (await result.Content.ReadAsStringAsync ());
-				Array.Reverse (user.Marks.Modules);
-			} catch {
-				user.Marks = null;
-			}
-			return user;
+				if (!user.Close && user.Nsstat != null) {
+					result = await client.PostAsync (buildUri ("/user/" + login + "/netsoul/"), GetHeader ());
+					if (!result.IsSuccessStatusCode)
+						return null;
+					List<Double[]> test = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Double[]>> (await result.Content.ReadAsStringAsync ());
+					user.Netsoul = new List<Data.UserJsonTypes.NetsoulRawData> ();
+					foreach (var val in test) {
+						Data.UserJsonTypes.NetsoulRawData item = new Data.UserJsonTypes.NetsoulRawData ();
+						item.EpochTime = (int)val [0];
+						item.TimeActiveScool = val [1];
+						item.TimeIldleScool = val [2];
+						item.TimeActiveOut = val [3];
+						item.TimeIldleOut = val [4];
+						if (val.Count () > 5)
+							item.Average = val [5];
+						user.Netsoul.Add (item);
+					}
+				}
+
+				result = await client.PostAsync (buildUri ("/user/" + login + "/notes/"), GetHeader ());
+				if (!result.IsSuccessStatusCode)
+					return null;
+				try {
+					user.Marks = Newtonsoft.Json.JsonConvert.DeserializeObject<UserMarks> (await result.Content.ReadAsStringAsync ());
+					Array.Reverse (user.Marks.Modules);
+				} catch {
+					user.Marks = null;
+				}
+				return user;
+			});
+
 		}
 
 		public async Task<TokenResponse> TryValidateToken (Calendar activity, Token token)
@@ -310,19 +316,18 @@ namespace Epitech.Intra.API
 
 		public async Task<List<Trombi>> GetSearchResult (string search)
 		{
-			HttpClient client = new HttpClient ();
-
-			if (search.Length < 3)
-				return null;
-			var result = await client.PostAsync (new Uri (BaseAPI + "/user/complete?format=json&contains=&search=" + search), GetHeader ());
-			if (!result.IsSuccessStatusCode)
-				return null;
 			try {
-				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Trombi>> (await result.Content.ReadAsStringAsync ());
-			} catch {
+				return await Task.Run (async () => {
+					HttpClient client = new HttpClient ();
+
+					if (search.Length < 3)
+						return null;
+					var result = await client.PostAsync (new Uri (BaseAPI + "/user/complete?format=json&contains=&search=" + search), GetHeader ());
+					return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<List<Trombi>> (await result.Content.ReadAsStringAsync ());
+				});
+			} catch (Exception ex) {
 				throw new Exception ("Impossible de récuperer les profils");
 			}
-
 		}
 
 		public async Task<List<Files>> GetProjectFiles (Project project)

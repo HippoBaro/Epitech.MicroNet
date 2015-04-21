@@ -42,11 +42,18 @@ namespace Epitech.Intra.SharedApp.Views
 			else
 				target = source;
 
-			WebView webview = new WebView { Source = target };
-			webview.Navigated += (sender, e) => {
-				Content = webview;
-			};
+			if (Device.OS == TargetPlatform.Android) {
+				Device.OpenUri (new Uri (target));
+				Navigation.PopModalAsync (false);
+				return;
+			}
+
+			WebView webview = new WebView {
 				
+				Source = new UrlWebViewSource { Url = target },
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				VerticalOptions = LayoutOptions.FillAndExpand
+			};
 			Content = webview;
 		}
 	}

@@ -89,8 +89,7 @@ namespace Epitech.Intra.SharedApp.Views
 					Header = new FilesHeader (this, project),
 					ItemsSource = registeredStudent,
 					HasUnevenRows = true,
-					VerticalOptions = LayoutOptions.FillAndExpand,
-					IsEnabled = false,
+					VerticalOptions = LayoutOptions.FillAndExpand
 				};
 				listView.ItemSelected += (sender, e) => {
 					if (e.SelectedItem != null)

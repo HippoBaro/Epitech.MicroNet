@@ -17,7 +17,7 @@ namespace Epitech.Intra.SharedApp
 		public User User;
 
 		public bool HasAllowedEventKit;
-		public bool UserHasActivatedEventSync = true;
+		public bool UserHasActivatedEventSync = Device.OnPlatform<bool> (true, false, false);
 
 		public static int ScreenWidth;
 		public static int ScreenHeight;

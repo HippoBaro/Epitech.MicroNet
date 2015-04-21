@@ -86,35 +86,35 @@ namespace Epitech.Intra.SharedApp.Views
 			GC.Collect ();
 			GC.WaitForPendingFinalizers ();
 			MenuTabs.Add (new Tab ("Profil", typeof(Profile)) {
-				Image = "MenuIcons/profile.png",
+				Image = "menuiconsprofile.png",
 				Description = "Me, Myself and I"
 			});
 			MenuTabs.Add (new Tab ("Notifications", typeof(Notifications)) {
-				Image = "MenuIcons/notifications.png",
+				Image = "menuiconsnotifications.png",
 				Description = "Quoi de neuf ?"
 			});
 			MenuTabs.Add (new Tab ("Planning", typeof(Planning)) {
-				Image = "MenuIcons/calendar.png",
+				Image = "menuiconscalendar.png",
 				Description = "Vos évènements"
 			});
 			MenuTabs.Add (new Tab ("Projets", typeof(Projets)) {
-				Image = "MenuIcons/projects.png",
+				Image = "menuiconsprojects.png",
 				Description = "Mes projets Epitech"
 			});
 			MenuTabs.Add (new Tab ("Trombi", typeof(Trombi)) {
-				Image = "MenuIcons/crowd.png",
+				Image = "menuiconscrowd.png",
 				Description = "Chercher des membres du réseau IONIS"
 			});
 			MenuTabs.Add (new Tab ("E-Learning", typeof(Semester)) {
-				Image = "MenuIcons/elearning.png",
+				Image = "menuiconselearning.png",
 				Description = "« Mèdeis ageômetrètos eisitô mou tèn stegèn »"
 			});
 			MenuTabs.Add (new Tab ("A propos", typeof(Informations)) {
-				Image = "MenuIcons/info.png",
+				Image = "menuiconsinfo.png",
 				Description = "En savoir plus"
 			});
 			MenuTabs.Add (new Tab ("Déconnexion", typeof(Disconnection)) {
-				Image = "MenuIcons/disconnect.png",
+				Image = "menuiconsdisconnect.png",
 				Description = "Quelqu'un est jaloux et veux tester l'app ?"
 			});
 		}
@@ -134,9 +134,8 @@ namespace Epitech.Intra.SharedApp.Views
 
 		async void Disconnect ()
 		{
-			string[] addbut = new string[1];
-			string action = await DisplayActionSheet ("Voulez-vous vraiment vous déconnecter ?" + Environment.NewLine + "Les données ne seront plus synchronisés.", "Annuler", "Me déconnecter", addbut);
-			if (action == "Me déconnecter") {
+			var action = await DisplayAlert ("Deconnexion", "Voulez-vous vraiment vous déconnecter ?" + Environment.NewLine + "Les données ne seront plus synchronisés.", "Me deconnecter", "Annuler");
+			if (action) {
 				IsPresented = false;
 				App.API.ForgetCredit ();
 				await DependencyService.Get<Security.ISecurity> ().DeleteItemAsync ();
@@ -160,6 +159,9 @@ namespace Epitech.Intra.SharedApp.Views
 				HasUnevenRows = true,
 				Header = new MenuHeader (),
 			};
+
+			ListView.HorizontalOptions = LayoutOptions.Fill;
+			ListView.VerticalOptions = LayoutOptions.Fill;
 
 			ListView.ItemSelected += (sender, args) => {
 				if (args.SelectedItem == null)

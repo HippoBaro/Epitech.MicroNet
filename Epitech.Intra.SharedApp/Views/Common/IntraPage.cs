@@ -56,7 +56,7 @@ namespace Epitech.Intra.SharedApp
 							LastUpdate = DateTime.Now;
 						}
 					}
-					if (Type == typeof(Planning)) {
+					if (Type == typeof(Planning) && ((App)Application.Current).UserHasActivatedEventSync) {
 						DependencyService.Get<IEventManagerIOS> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => !x.Past && x.EventRegistered != null));
 					}
 				} catch (Exception ex) {
@@ -102,6 +102,7 @@ namespace Epitech.Intra.SharedApp
 
 		public virtual void DisplayContent (object data)
 		{
+			BackgroundColor = Color.White;
 			IsBusy = false;
 		}
 

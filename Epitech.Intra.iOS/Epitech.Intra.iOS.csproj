@@ -184,17 +184,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\MenuIcons\calendar.png" />
-    <BundleResource Include="Resources\MenuIcons\crowd.png" />
-    <BundleResource Include="Resources\MenuIcons\elearning.png" />
-    <BundleResource Include="Resources\MenuIcons\notifications.png" />
-    <BundleResource Include="Resources\MenuIcons\profile.png" />
-    <BundleResource Include="Resources\MenuIcons\projects.png" />
     <BundleResource Include="Resources\404.jpg" />
     <BundleResource Include="Resources\menu.png" />
     <BundleResource Include="Resources\menu24.png" />
     <BundleResource Include="Resources\menu32.png" />
-    <BundleResource Include="Resources\MenuIcons\info.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-40.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-40%402x.png" />
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-40%403x.png" />
@@ -203,7 +196,14 @@
     <BundleResource Include="Resources\Images.xcassets\AppIcons.appiconset\Icon-Small%403x.png" />
     <BundleResource Include="Resources\logo_blue.png" />
     <BundleResource Include="Resources\git_logo.png" />
-    <BundleResource Include="Resources\MenuIcons\disconnect.png" />
+    <BundleResource Include="Resources\MenuIconscalendar.png" />
+    <BundleResource Include="Resources\MenuIconscrowd.png" />
+    <BundleResource Include="Resources\MenuIconsdisconnect.png" />
+    <BundleResource Include="Resources\MenuIconselearning.png" />
+    <BundleResource Include="Resources\MenuIconsinfo.png" />
+    <BundleResource Include="Resources\MenuIconsnotifications.png" />
+    <BundleResource Include="Resources\MenuIconsprofile.png" />
+    <BundleResource Include="Resources\MenuIconsprojects.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -228,7 +228,6 @@
   <Import Project="..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <ItemGroup>
     <Folder Include="DependencyService\" />
-    <Folder Include="Resources\MenuIcons\" />
     <Folder Include="CustomRenderer\" />
   </ItemGroup>
   <ItemGroup>

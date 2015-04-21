@@ -42,6 +42,7 @@ namespace Epitech.Intra.SharedApp
 			model.LegendBorderThickness = 0;
 			model.PlotAreaBorderThickness = new OxyThickness (0, 0, 0, 0);
 			model.Padding = new OxyThickness (0, 0, 0, 0);
+			model.PlotAreaBorderColor = OxyColors.Transparent;
 			model.Series.Clear ();
 			if (model.PlotView != null)
 				model.Axes.Clear ();
@@ -82,6 +83,7 @@ namespace Epitech.Intra.SharedApp
 				LabelMargin = 5,
 				TextColor = OxyColors.White,
 				FillColor = IntraColor.GraphColor.ActiveIn,
+				StrokeColor = OxyColors.Transparent
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
@@ -98,6 +100,7 @@ namespace Epitech.Intra.SharedApp
 				IsStacked = true,
 				TextColor = OxyColors.White,
 				FillColor = IntraColor.GraphColor.IdleIn,
+				StrokeColor = OxyColors.Transparent
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
@@ -114,6 +117,7 @@ namespace Epitech.Intra.SharedApp
 				LabelMargin = 5,
 				TextColor = OxyColors.White,
 				FillColor = IntraColor.GraphColor.ActiveOut,
+				StrokeColor = OxyColors.Transparent
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
@@ -129,6 +133,7 @@ namespace Epitech.Intra.SharedApp
 				IsStacked = true,
 				TextColor = OxyColors.White,
 				FillColor = IntraColor.GraphColor.IdleOut,
+				StrokeColor = OxyColors.Transparent
 			};
 			int b = 1;
 			for (int i = 0; i < netsoul.Count; i++, b++) {
