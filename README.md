@@ -2,7 +2,7 @@ Epitech MicroNet
 ===================
 
 
-**MicroNet** est un client iOS (et bientôt Android !) permettant d’accéder à [l'Intranet de l'école Epitech](https://intra.epitech.eu/). Il est développé en C# et utilise le framework [Xamarin](http://xamarin.com/platform) (anciennement Monotouch) pour générer du code natif.
+**MicroNet** est un client iOS et Android permettant d’accéder à [l'Intranet de l'école Epitech](https://intra.epitech.eu/). Il est développé en C# et utilise le framework [Xamarin](http://xamarin.com/platform) (anciennement Monotouch) pour générer du code natif.
 Le code utilise l'abstraction de Xamarin.Forms pour déclarer des interfaces *"Device agnostic"* : le même code compile pour Android, Windows Phone et iOS (voir OSX et Windows) en utilisant les API de chaque OS.
 
  ***Xamarin est gratuit pour les étudiants !***
@@ -14,6 +14,8 @@ Le code utilise l'abstraction de Xamarin.Forms pour déclarer des interfaces *"D
 
 [Cliquez ici pour avoir plus d'informations sur le code !](http://hippobaro.github.io/Epitech.MicroNet/)
 ------------------------------------------------------------------------
+
+***[L'application est sur le Google Play !](https://play.google.com/store/apps/details?id=com.Epitech.MicroNet)***
 
 ----------
 
