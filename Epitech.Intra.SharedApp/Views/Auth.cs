@@ -158,6 +158,8 @@ namespace Epitech.Intra.SharedApp.Views
 				if (i == 0) {
 					((Profile)RootMaster.MenuTabs [i].Page).TargetUser = login;
 					((App)Application.Current).User = ((User)await RootMaster.MenuTabs [i].Page.SilentUpdate (login));
+				} else if (RootMaster.MenuTabs [i].PageType == typeof(Projets)) {
+					continue;
 				} else {
 					await RootMaster.MenuTabs [i].Page.SilentUpdate (null);
 				}

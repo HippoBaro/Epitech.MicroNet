@@ -117,7 +117,7 @@ namespace Epitech.Intra.SharedApp.Views
 					IsBusy = false;
 				} else
 					list.ItemsSource = null;
-			} catch (Exception ex) {
+			} catch {
 				list.ItemsSource = null;
 			}
 		}

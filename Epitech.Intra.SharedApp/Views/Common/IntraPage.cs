@@ -20,6 +20,11 @@ namespace Epitech.Intra.SharedApp
 		Func<string, Task<object>> FunctionWithParam;
 		Func<Task<object>> Function;
 
+		public IntraPage ()
+		{
+			BackgroundColor = Color.White;
+		}
+
 		public bool IsDataInvalidated (DateTime time)
 		{
 			return DateTime.Compare (time + DataInvalidation, DateTime.Now) < 0;
@@ -57,7 +62,7 @@ namespace Epitech.Intra.SharedApp
 						}
 					}
 					if (Type == typeof(Planning) && ((App)Application.Current).UserHasActivatedEventSync) {
-						DependencyService.Get<IEventManagerIOS> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => !x.Past && x.EventRegistered != null));
+						DependencyService.Get<IEventManager> ().SynchrosizeCalendar (((List<Calendar>)Data).FindAll (x => !x.Past && x.EventRegistered != null));
 					}
 				} catch (Exception ex) {
 					Insights.Report (ex);

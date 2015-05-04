@@ -1,27 +1,48 @@
 ﻿using System.Threading.Tasks;
 using Epitech.Intra.Droid;
+using System.Runtime.Remoting.Contexts;
+using Android.Content;
+using Android.Preferences;
+using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency (typeof(SecureEnclaveDroid))]
 namespace Epitech.Intra.Droid
 {
 	public class SecureEnclaveDroid : Epitech.Intra.SharedApp.Security.ISecurity
 	{
+		private const string preferenceName = "Epitech.Intra.SharedPreferences";
 
 		public async Task<bool> AddItemAsync (Epitech.Intra.SharedApp.Security.Credit credit)
 		{
-			//return await Task.FromResult<bool> (AddItem (credit));
-			return await Task.Run (() => true);
+			return await Task.Run (() => {
+//				try {
+				ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences (Forms.Context); 
+				ISharedPreferencesEditor editor = prefs.Edit ();
+				editor.PutString ("Login", credit.Login);
+				editor.PutString ("Password", credit.Password);
+				return editor.Commit ();
+//				} catch (System.Exception ex) {
+//					return false;
+//				}
+			});
 		}
 
 		public async Task<Epitech.Intra.SharedApp.Security.Credit> GetItemAsync ()
 		{
-			//return await Task.FromResult<Epitech.Intra.SharedApp.Security.Credit> (GetItem ());
-			return await Task.Run (() => temp ());
-		}
+			return await Task.Run (() => {
+				Epitech.Intra.SharedApp.Security.Credit credit = new Epitech.Intra.SharedApp.Security.Credit ();
 
-		private Epitech.Intra.SharedApp.Security.Credit temp ()
-		{
-			return null;
+				//				try {
+				ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences (Forms.Context);
+				credit.Login = prefs.GetString ("Login", string.Empty);
+				credit.Password = prefs.GetString ("Password", string.Empty);
+				if (credit.Login == string.Empty || credit.Password == string.Empty)
+					return null;
+				//				} catch (System.Exception ex) {
+				//					return null;
+				//				}
+				return credit;
+			});
 		}
 
 		public async Task<bool> UpdateItemAsync (Epitech.Intra.SharedApp.Security.Credit credit)
@@ -33,7 +54,17 @@ namespace Epitech.Intra.Droid
 		public async Task<bool> DeleteItemAsync ()
 		{
 			//return await Task.FromResult<bool> (DeleteItem ());
-			return await Task.Run (() => true);
+			return await Task.Run (() => {
+				//				try {
+				ISharedPreferences prefs = PreferenceManager.GetDefaultSharedPreferences (Forms.Context); 
+				ISharedPreferencesEditor editor = prefs.Edit ();
+				editor.Remove ("Login");
+				editor.Remove ("Password");
+				return editor.Commit ();
+				//				} catch (System.Exception ex) {
+				//					return false;
+				//				}
+			});
 		}
 
 		//		static bool AddItem (Epitech.Intra.SharedApp.Security.Credit credit)

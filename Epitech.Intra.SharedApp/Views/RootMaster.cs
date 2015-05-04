@@ -166,6 +166,7 @@ namespace Epitech.Intra.SharedApp.Views
 			ListView.ItemSelected += (sender, args) => {
 				if (args.SelectedItem == null)
 					return;
+				Xamarin.Insights.Track ("Moved to " + ((Tab)ListView.SelectedItem).Name, null);
 				if (((Tab)ListView.SelectedItem).PageType == typeof(Disconnection)) {
 					Disconnect ();
 					return;

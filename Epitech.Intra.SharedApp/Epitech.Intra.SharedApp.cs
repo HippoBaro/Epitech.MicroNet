@@ -35,6 +35,7 @@ namespace Epitech.Intra.SharedApp
 				Setters = {
 					new Setter { Property = NavigationPage.BarBackgroundColorProperty, Value = IntraColor.DarkGray },
 					new Setter { Property = NavigationPage.BarTextColorProperty, Value = Color.White },
+					new Setter { Property = NavigationPage.BackgroundColorProperty, Value = Color.White }
 				}
 			};
 			Application.Current.Resources.Add (NavBarStyle);

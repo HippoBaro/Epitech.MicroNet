@@ -11,7 +11,7 @@ using Epitech.Intra.SharedApp;
 [assembly: Xamarin.Forms.Dependency (typeof(EventManagerIOS))]
 namespace Epitech.Intra.iOS
 {
-	public class EventManagerIOS : IEventManagerIOS
+	public class EventManagerIOS : IEventManager
 	{
 		static protected EKEventStore eventStore;
 

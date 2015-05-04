@@ -88,7 +88,6 @@ namespace Epitech.Intra.API
 
 			if (responsePicture == null || !(responsePicture.EndsWith (forLogin + ".bmp", StringComparison.Ordinal) || responsePicture.EndsWith (forLogin + ".jpg", StringComparison.Ordinal)))
 				return PicturePlaceholder;
-
 			if (size == PictureSize.Large)
 				return "https://cdn.local.epitech.eu/userprofil/" + forLogin + ".bmp";
 			if (size == PictureSize.Light)
@@ -120,7 +119,8 @@ namespace Epitech.Intra.API
 			var head = new List<KeyValuePair<string,string>> ();
 			head.Add (new KeyValuePair<string, string> ("login", Login));
 			head.Add (new KeyValuePair<string, string> ("password", password));
-			head.Add (new KeyValuePair<string, string> ("rememberme", "on"));
+			head.Add (new KeyValuePair<string, string> ("rememberme", "yes"));
+			head.Add (new KeyValuePair<string, string> ("Content-Type", "application/json"));
 
 			return new FormUrlEncodedContent (head);
 		}
@@ -170,8 +170,8 @@ namespace Epitech.Intra.API
 					return null;
 				try {
 					user = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.User> (await result.Content.ReadAsStringAsync ());
-				} catch {
-					throw new Exception ("Impossible de récuperer les information utilisateur. Ce compte est peut-être un compte spécial pas encore supporté par l'application.");
+				} catch (Exception ex) {
+					throw new Exception ("Impossible de récuperer les information utilisateur. Ce compte est peut-être un compte spécial pas encore supporté par l'application.", ex);
 				}
 
 				if (!user.Close && user.Nsstat != null) {
@@ -237,8 +237,8 @@ namespace Epitech.Intra.API
 				if (!result.IsSuccessStatusCode)
 					return null;
 				list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Calendar>> (await result.Content.ReadAsStringAsync ());
-			} catch {
-				throw new Exception ("Impossible de récuperer les informations du calendrier.");
+			} catch (Exception e) {
+				throw new Exception ("Impossible de récuperer les informations du calendrier.", e);
 			}
 			return list;
 		}
@@ -262,8 +262,8 @@ namespace Epitech.Intra.API
 			try {
 				var result = await client.PostAsync (buildUri ("/module/" + activity.Scolaryear + "/" + activity.Codemodule + "/" + activity.Codeinstance + "/" + activity.Codeacti + "/" + activity.Codeevent + "/register"), GetHeader ());
 				return result.IsSuccessStatusCode;
-			} catch {
-				throw new Exception ("Impossible de s'inscrire");
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de s'inscrire", ex);
 			}
 
 		}
@@ -275,8 +275,8 @@ namespace Epitech.Intra.API
 			try {
 				var result = await client.PostAsync (buildUri ("/module/" + activity.Scolaryear + "/" + activity.Codemodule + "/" + activity.Codeinstance + "/" + activity.Codeacti + "/" + activity.Codeevent + "/unregister"), GetHeader ());
 				return result.IsSuccessStatusCode;
-			} catch {
-				throw new Exception ("Impossible de se désinscrire");
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de se désinscrire", ex);
 			}
 
 		}
@@ -302,15 +302,17 @@ namespace Epitech.Intra.API
 
 			try {
 				Projet[] temp = Newtonsoft.Json.JsonConvert.DeserializeObject<Welcome> (await result.Content.ReadAsStringAsync ()).Board.Projets;
-
 				List<Project> projects = new List<Project> ();
 				foreach (var item in temp) {
-					result = await client.PostAsync (buildUri (item.TitleLink + "project"), GetHeader ());
+					Uri tmp = buildUri (item.TitleLink + "project");
+					result = await client.PostAsync (tmp, GetHeader ());
+					string tmp2 = await result.Content.ReadAsStringAsync ();
+					System.Diagnostics.Debug.WriteLine (tmp2);
 					projects.Add (Newtonsoft.Json.JsonConvert.DeserializeObject<Project> (await result.Content.ReadAsStringAsync ()));
 				}
 				return projects;
-			} catch {
-				throw new Exception ("Impossible de récuperer les projets");
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de récuperer les projets", ex);
 			}
 		}
 
@@ -326,7 +328,7 @@ namespace Epitech.Intra.API
 					return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<List<Trombi>> (await result.Content.ReadAsStringAsync ());
 				});
 			} catch (Exception ex) {
-				throw new Exception ("Impossible de récuperer les profils");
+				throw new Exception ("Impossible de récuperer les profils", ex);
 			}
 		}
 
@@ -349,8 +351,8 @@ namespace Epitech.Intra.API
 					}
 				}
 				return resultlist.FindAll (x => x.TypeOfFile != "d");
-			} catch {
-				throw new Exception ("Impossible de récuperer les sujets");
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de récuperer les sujets", ex);
 			}
 		}
 
@@ -363,8 +365,8 @@ namespace Epitech.Intra.API
 				throw new Exception ("Impossible de récuperer les informations de l'e-learning");
 			try {
 				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<ELearning>> (await result.Content.ReadAsStringAsync ());
-			} catch {
-				throw new Exception ("Impossible de récuperer les informations de l'e-learning");
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de récuperer les informations de l'e-learning", ex);
 			}
 		}
 
@@ -377,8 +379,8 @@ namespace Epitech.Intra.API
 				throw new Exception ("Impossible de récuperer les notications");
 			try {
 				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Notification>> (await result.Content.ReadAsStringAsync ());
-			} catch {
-				throw new Exception ("Impossible de récuperer les notifactions");
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de récuperer les notifactions", ex);
 			}
 		}
 	}

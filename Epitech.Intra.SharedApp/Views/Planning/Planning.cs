@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Epitech.Intra.SharedApp.Views
 {
-	public interface IEventManagerIOS
+	public interface IEventManager
 	{
 		void SynchrosizeCalendar (List<Calendar> events);
 	}
