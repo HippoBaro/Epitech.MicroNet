@@ -16,6 +16,7 @@ Le code utilise l'abstraction de Xamarin.Forms pour déclarer des interfaces *"D
 ------------------------------------------------------------------------
 
 ***[L'application est sur l'AppStore !](https://itunes.apple.com/us/app/epitech-micronet/id985868775)***
+
 ***[L'application est sur le Google Play !](https://play.google.com/store/apps/details?id=com.Epitech.MicroNet)***
 
 ----------
