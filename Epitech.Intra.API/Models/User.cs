@@ -120,6 +120,8 @@ namespace Epitech.Intra.API.Data
 		public List<NetsoulRawData> Netsoul { get; set; }
 
 		public UserMarks Marks { get; set; }
+
+		public int Index { get; set; }
 	}
 
 }

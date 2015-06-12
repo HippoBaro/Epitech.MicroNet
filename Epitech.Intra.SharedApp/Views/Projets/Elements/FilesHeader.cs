@@ -3,6 +3,7 @@
 using Xamarin.Forms;
 using Epitech.Intra.API.Data.ProjectJsonTypes;
 using Epitech.Intra.SharedApp.Views;
+using System.Collections.Generic;
 
 namespace Epitech.Intra.SharedApp
 {
@@ -19,14 +20,24 @@ namespace Epitech.Intra.SharedApp
 				IsRunning = true
 			};
 			handler.IsBusy = true;
-			DisplayContent (project);
+			try {
+				DisplayContent (project);
+			} catch (Exception ex) {
+				throw;
+			}
+
 			handler.IsBusy = false;
 
 		}
 
 		public async void DisplayContent (Epitech.Intra.API.Data.Project project)
 		{
-			var elem = await App.API.GetProjectFiles (project);
+			List<Files> elem = null;
+			try {
+				elem = await App.API.GetProjectFiles (project);
+			} catch (Exception ex) {
+			}
+
 
 			ListView listView = new ListView {
 				ItemTemplate = new DataTemplate (typeof(TextCell)) {

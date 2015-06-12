@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using Epitech.Intra.API.Data;
 using System.Threading.Tasks;
 using Xamarin;
+using Xamarin.Forms.Labs.Controls;
 
+[assembly : Preserve]
 namespace Epitech.Intra.SharedApp.Views
 {
+	[Preserve]
 	public class NotificationCell : ViewCell
 	{
 		private Notification noti;
@@ -180,6 +183,7 @@ namespace Epitech.Intra.SharedApp.Views
 				string instance;
 				string activity;
 				bool isProject = false;
+				bool isNote = false;
 
 				string temp = item.Href;
 
@@ -207,19 +211,36 @@ namespace Epitech.Intra.SharedApp.Views
 						break;
 				}
 				activity = temp.Substring (0, i);
-
-				return !await FollowLink (year, module, instance, activity, isProject) ? item.Href : null;
+				temp = temp.Remove (0, i + 1);
+				if (temp == "note/")
+					isNote = true;
+				return !await FollowLink (year, module, instance, activity, isProject, isNote) ? item.Href : null;
 			}
 			return String.Empty;
 		}
 
-		private async Task<bool> FollowLink (string year, string module, string instance, string activity, bool isProject)
+		private async Task<bool> FollowLink (string year, string module, string instance, string activity, bool isProject, bool isNote)
 		{
 			object target = null;
 
-			if (!isProject) {
+			if (isNote) {
+				View tmp = Content;
+				Content = new LoadingScreen ("Chargement des notes...");
+				await RootMaster.MenuTabs [0].Page.SilentUpdate (((App)Application.Current).UserLogin);
+				Content = tmp;
+				foreach (var item in ((User)RootMaster.MenuTabs[0].Page.Data).Marks.Notes) {
+					if (item.Codeacti == activity && item.Codeinstance == instance && item.Codemodule == module)
+						await Navigation.PushAsync (new ActivityMarks (item));
+				}
+			} else if (!isProject) {
 				foreach (var item in RootMaster.MenuTabs) {
 					if (item.PageType == typeof(Planning)) {
+						if (item.Page.Data == null) {
+							View tmp = Content;
+							Content = new LoadingScreen ("Chargement des activités...");
+							await item.Page.SilentUpdate (null);
+							Content = tmp;
+						}
 						List<Calendar> Activities = ((List<Calendar>)item.Page.Data).FindAll (x => x.Scolaryear == year && x.Codemodule == module && x.Codeinstance == instance && x.Codeacti == activity);
 						Activities = Activities.FindAll (x => x.EventRegistered != null);
 
@@ -250,6 +271,12 @@ namespace Epitech.Intra.SharedApp.Views
 			} else {
 				foreach (var item in RootMaster.MenuTabs) {
 					if (item.PageType == typeof(Projets)) {
+						if (item.Page.Data == null) {
+							View tmp = Content;
+							Content = new LoadingScreen ("Chargement des projets...");
+							await item.Page.SilentUpdate (null);
+							Content = tmp;
+						}
 						target = ((List<API.Data.Project>)item.Page.Data).Find (x => x.Scolaryear == year && x.Codemodule == module && x.Codeinstance == instance && x.Codeacti == activity);
 						if (target == null)
 							return false;

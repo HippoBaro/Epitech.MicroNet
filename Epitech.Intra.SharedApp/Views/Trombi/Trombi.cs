@@ -94,7 +94,6 @@ namespace Epitech.Intra.SharedApp.Views
 					Navigation.PushAsync (new Profile (((API.Data.Trombi)e.SelectedItem).Login));
 					((ListView)sender).SelectedItem = null;
 				}
-
 			};
 
 			Content = new StackLayout {

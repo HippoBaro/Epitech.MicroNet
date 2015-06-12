@@ -1,10 +1,9 @@
-﻿using System;
-
-using Xamarin.Forms;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Xamarin.Forms.Labs.Controls;
 
 namespace Epitech.Intra.SharedApp
 {
+	[Preserve]
 	public static class Security
 	{
 		public class Credit
@@ -13,6 +12,7 @@ namespace Epitech.Intra.SharedApp
 			public string Password;
 		}
 
+		[Preserve]
 		public interface ISecurity
 		{
 			Task<bool> AddItemAsync (Credit credit);

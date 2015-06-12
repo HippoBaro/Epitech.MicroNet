@@ -59,9 +59,9 @@ namespace Epitech.Intra.iOS
 					foreach (var item in notif.UserInfo) {
 						Links.Add (new Epitech.Intra.API.HTMLCleaner.LinkItem { Href = ((NSString)item.Value).ToString () });
 					}
-					((Notifications)MainApp.Root.JumpToPage (typeof(Notifications))).OpenNotification (Links);
+					((Notifications)MainApp.Root.JumpToPage<Notifications> ()).OpenNotification (Links);
 				} else {
-					MainApp.Root.JumpToPage (typeof(Notifications));
+					MainApp.Root.JumpToPage<Notifications> ();
 				}
 			}
 		}

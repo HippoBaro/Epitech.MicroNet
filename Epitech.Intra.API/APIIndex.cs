@@ -100,6 +100,7 @@ namespace Epitech.Intra.API
 	public class APIIndex
 	{
 		public const string BaseAPI = "https://intra.epitech.eu";
+		public const string APIVersion = "1.1";
 		public string Login;
 		string password;
 
@@ -135,6 +136,8 @@ namespace Epitech.Intra.API
 
 			return await Task.Run (async () => {
 				HttpClient client = new HttpClient ();
+				client.DefaultRequestHeaders.UserAgent.Clear ();
+				client.DefaultRequestHeaders.UserAgent.ParseAdd ("MicroNet/" + APIVersion);
 
 				try {
 					var result = await client.PostAsync (buildUri ("/"), GetHeader ());
@@ -157,6 +160,24 @@ namespace Epitech.Intra.API
 					throw new Exception ("Erreur", e);
 				}
 			});
+		}
+
+		public async Task<object> GetUserShort (string login)
+		{
+			return await Task.Run (async () => { 
+				HttpClient client = new HttpClient ();
+				Data.User user;
+				try {
+					var result = await client.PostAsync (buildUri ("/user/" + login + "/"), GetHeader ());
+					if (!result.IsSuccessStatusCode)
+						return null;
+					user = Newtonsoft.Json.JsonConvert.DeserializeObject<Data.User> (await result.Content.ReadAsStringAsync ());
+				} catch (Exception ex) {
+					return null;
+				}
+				return user;
+			});
+
 		}
 
 		public async Task<object> GetUser (string login)
@@ -285,9 +306,9 @@ namespace Epitech.Intra.API
 		{
 			HttpClient client = new HttpClient ();
 			try {
-				var result = await client.PostAsync (buildUri ("/module/" + note.Scolaryear + "/" + note.Codemodule + "/" + note.Codeinstance + "/" + note.Codeacti + "/note"), GetHeader ());
+				var result = await client.PostAsync (buildUri ("/module/" + note.Scolaryear + "/" + note.Codemodule + "/" + note.Codeinstance + "/" + note.Codeacti + "/note"), null);
 				return !result.IsSuccessStatusCode ? null : Newtonsoft.Json.JsonConvert.DeserializeObject<List<ActivityMark>> (await result.Content.ReadAsStringAsync ());
-			} catch {
+			} catch (Exception ex) {
 				return null;
 			}
 		}
@@ -305,9 +326,7 @@ namespace Epitech.Intra.API
 				List<Project> projects = new List<Project> ();
 				foreach (var item in temp) {
 					Uri tmp = buildUri (item.TitleLink + "project");
-					result = await client.PostAsync (tmp, GetHeader ());
-					string tmp2 = await result.Content.ReadAsStringAsync ();
-					System.Diagnostics.Debug.WriteLine (tmp2);
+					result = await client.PostAsync (tmp, null);
 					projects.Add (Newtonsoft.Json.JsonConvert.DeserializeObject<Project> (await result.Content.ReadAsStringAsync ()));
 				}
 				return projects;
@@ -381,6 +400,33 @@ namespace Epitech.Intra.API
 				return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Notification>> (await result.Content.ReadAsStringAsync ());
 			} catch (Exception ex) {
 				throw new Exception ("Impossible de récuperer les notifactions", ex);
+			}
+		}
+
+		public async Task<object> GetUsersWithFilter (string location, string year, string promo)
+		{
+			HttpClient client = new HttpClient ();
+			TrombiFilter resultlist = new TrombiFilter ();
+			resultlist.Results = new List<TrombiFilterItem> ();
+
+			var result = await client.PostAsync (BaseAPI + "/user/filter/user?format=json&" + "location=" + location + "&year=" + year + "&promo=" + promo + "&offset=0", GetHeader ());
+			if (!result.IsSuccessStatusCode)
+				throw new Exception ("Impossible de récuperer les profils");
+			try {
+				TrombiFilter root = Newtonsoft.Json.JsonConvert.DeserializeObject<TrombiFilter> (await result.Content.ReadAsStringAsync ());
+				if (root.Results == null)
+					return null;
+				resultlist.Results.AddRange (root.Results);
+				resultlist.Count = root.Count;
+				while (root.Results != null) {
+					result = await client.PostAsync (BaseAPI + "/user/filter/user?format=json&" + "location=" + location + "&year=" + year + "&promo=" + promo + "&offset=" + resultlist.Results.Count, GetHeader ());
+					root = Newtonsoft.Json.JsonConvert.DeserializeObject<TrombiFilter> (await result.Content.ReadAsStringAsync ());
+					if (root.Results != null)
+						resultlist.Results.AddRange (root.Results);
+				}
+				return resultlist;
+			} catch (Exception ex) {
+				throw new Exception ("Impossible de récuperer les profils", ex);
 			}
 		}
 	}

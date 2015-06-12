@@ -4,12 +4,12 @@ using Security;
 using System.Threading.Tasks;
 using Epitech.Intra.iOS;
 
-[assembly: Xamarin.Forms.Dependency (typeof(SecureEnclaveIOS))]
+[assembly: Xamarin.Forms.Dependency (typeof(SecureEnclaveIOS)), Preserve]
 namespace Epitech.Intra.iOS
 {
+	[Preserve]
 	public class SecureEnclaveIOS : Epitech.Intra.SharedApp.Security.ISecurity
 	{
-
 		public async Task<bool> AddItemAsync (Epitech.Intra.SharedApp.Security.Credit credit)
 		{
 			return await Task.FromResult<bool> (AddItem (credit));

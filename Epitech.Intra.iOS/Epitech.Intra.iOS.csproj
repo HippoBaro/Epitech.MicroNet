@@ -44,6 +44,7 @@
     </MtouchI18n>
     <CodesignKey>iPhone Developer</CodesignKey>
     <AssemblyName>Epitech.IntraiOS</AssemblyName>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,13 +62,14 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchUseSGen>true</MtouchUseSGen>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>Full</MtouchLink>
     <MtouchI18n>
     </MtouchI18n>
     <CodesignProvision>94ae3a7c-e88a-4451-9ed6-df5bdcdbf927</CodesignProvision>
     <IpaPackageName>
     </IpaPackageName>
     <AssemblyName>EpitechIntraiOS</AssemblyName>
+    <MtouchExtraArgs>--linkskip=Epitech.Intra.iOS --linkskip=Epitech.Intra.API</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -82,12 +84,16 @@
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchI18n>
     </MtouchI18n>
-    <MtouchUseLlvm>true</MtouchUseLlvm>
-    <MtouchUseThumb>true</MtouchUseThumb>
     <IpaPackageName>
     </IpaPackageName>
     <CodesignProvision>c0f9f3bc-6133-443a-a8b9-53b9f1d171d7</CodesignProvision>
     <AssemblyName>EpitechIntraiOS</AssemblyName>
+    <MtouchSdkVersion>8.3</MtouchSdkVersion>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchUseThumb>true</MtouchUseThumb>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchLink>Full</MtouchLink>
+    <MtouchExtraArgs>--linkskip=Epitech.Intra.iOS --linkskip=Epitech.Intra.API</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>full</DebugType>
@@ -125,6 +131,10 @@
     <IpaPackageName>
     </IpaPackageName>
     <AssemblyName>EpitechIntraiOS</AssemblyName>
+    <MtouchSdkVersion>8.3</MtouchSdkVersion>
+    <MtouchExtraArgs>--linkskip=Epitech.Intra.iOS --linkskip=Epitech.Intra.API</MtouchExtraArgs>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -136,15 +146,6 @@
     </Reference>
     <Reference Include="System.Json.PCL">
       <HintPath>..\packages\Rivets.1.0.5.0\lib\portable-net45+wp8+win8+MonoAndroid10+MonoTouch10\System.Json.PCL.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Insights">
-      <HintPath>..\packages\Xamarin.Insights.1.9.1.107\lib\Xamarin.iOS10\Xamarin.Insights.dll</HintPath>
-    </Reference>
-    <Reference Include="PLCrashReporterUnifiedBinding">
-      <HintPath>..\packages\Xamarin.Insights.1.9.1.107\lib\Xamarin.iOS10\PLCrashReporterUnifiedBinding.dll</HintPath>
-    </Reference>
-    <Reference Include="StoreRating.Forms.Plugin.Abstractions">
-      <HintPath>..\packages\VoxDev.StoreRating.Forms.Plugin.1.0.0.1\lib\portable-net45+wp8+win8+MonoAndroid10+MonoTouch10\StoreRating.Forms.Plugin.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.iOS">
       <HintPath>..\packages\Xamarin.Forms.1.4.2.6359\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
@@ -158,11 +159,11 @@
     <Reference Include="Xamarin.Forms.Platform">
       <HintPath>..\packages\Xamarin.Forms.1.4.2.6359\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="Refractored.Xam.Settings">
-      <HintPath>..\packages\Xam.Plugins.Settings.1.5.1\lib\Xamarin.iOS10\Refractored.Xam.Settings.dll</HintPath>
+    <Reference Include="Xamarin.Insights">
+      <HintPath>..\packages\Xamarin.Insights.1.10.4.112\lib\Xamarin.iOS10\Xamarin.Insights.dll</HintPath>
     </Reference>
-    <Reference Include="Refractored.Xam.Settings.Abstractions">
-      <HintPath>..\packages\Xam.Plugins.Settings.1.5.1\lib\Xamarin.iOS10\Refractored.Xam.Settings.Abstractions.dll</HintPath>
+    <Reference Include="PLCrashReporterUnifiedBinding">
+      <HintPath>..\packages\Xamarin.Insights.1.10.4.112\lib\Xamarin.iOS10\PLCrashReporterUnifiedBinding.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +213,7 @@
     <BundleResource Include="Resources\menuiconsnotifications.png" />
     <BundleResource Include="Resources\menuiconsprofile.png" />
     <BundleResource Include="Resources\menuiconsprojects.png" />
+    <BundleResource Include="Resources\menuiconsleaderboard.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -220,7 +222,6 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
-    <None Include="Properties\_SettingsStarted.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

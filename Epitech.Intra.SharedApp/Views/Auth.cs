@@ -36,7 +36,7 @@ namespace Epitech.Intra.SharedApp.Views
 				if (!await TryConnect (Credit))
 					await DependencyService.Get<Security.ISecurity> ().DeleteItemAsync ();
 			} else
-				DisplayContent ();
+				DisplayContent (string.Empty);
 		}
 
 		async Task<bool> TryConnect (Security.Credit credit)
@@ -49,20 +49,21 @@ namespace Epitech.Intra.SharedApp.Views
 					return true;
 				}
 				await DisplayAlert ("Connexion", "Verifier vos identifiants", "Ok");
-				DisplayContent ();
+				DisplayContent (credit.Login);
 				return false;
 			} catch (Exception ex) {
 				await DisplayAlert ("Connexion", ex.Message, "Ok");
-				DisplayContent ();
+				DisplayContent (credit.Login);
 				return false;
 			}
 		}
 
-		void DisplayContent ()
+		void DisplayContent (string user)
 		{
 			Entry login = new Entry {
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 				Placeholder = "Login",
+				Text = user
 			};
 			Entry pass = new Entry {
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -139,7 +140,7 @@ namespace Epitech.Intra.SharedApp.Views
 			var handle = Insights.TrackTime ("TimeToLogin");
 			handle.Start ();
 
-			var progressbar = new ProgressBar { WidthRequest = App.ScreenWidth - 100 };
+			var progressbar = new ActivityIndicator ();
 			var status = new Label {
 				FontSize = Device.GetNamedSize (NamedSize.Medium, typeof(Label)),
 				XAlign = TextAlignment.Center
@@ -152,26 +153,12 @@ namespace Epitech.Intra.SharedApp.Views
 
 			Content = root;
 
-			for (int i = 0; i < RootMaster.MenuTabs.Count; i++) {
-				status.Text = RootMaster.MenuTabs [i].Name;
-				progressbar.Progress = double.Parse ((i).ToString ()) / double.Parse (RootMaster.MenuTabs.Count.ToString ());
-				if (i == 0) {
-					((Profile)RootMaster.MenuTabs [i].Page).TargetUser = login;
-					((App)Application.Current).User = ((User)await RootMaster.MenuTabs [i].Page.SilentUpdate (login));
-				} else if (RootMaster.MenuTabs [i].PageType == typeof(Projets)) {
-					continue;
-				} else {
-					await RootMaster.MenuTabs [i].Page.SilentUpdate (null);
-				}
-			}
-
-			((App)Application.Current).Root.DrawMenu ();
-
-			progressbar.Progress = 1;
+			progressbar.IsRunning = true;
 			status.Text = "On y est presque...";
-			await Task.Delay (500);
+			((App)Application.Current).User = ((User)await RootMaster.MenuTabs [0].Page.SilentUpdate (login));
 			((Profile)RootMaster.MenuTabs [0].Page).DisplayContent (RootMaster.MenuTabs [0].Page.Data);
-
+			((Profile)RootMaster.MenuTabs [0].Page).TargetUser = login;
+			((App)Application.Current).Root.DrawMenu ();
 			var user = ((User)((RootMaster.MenuTabs [0].Page.Data)));
 
 			var traits = new Dictionary<string, string> {

@@ -78,7 +78,7 @@ namespace Epitech.Intra.SharedApp.Views
 
 		public Profile (string user)
 		{
-			TargetUser = (user == null) ? App.API.Login : user;
+			TargetUser = user ?? App.API.Login;
 			InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan (1, 0, 0), TargetUser);
 		}
 
@@ -87,7 +87,7 @@ namespace Epitech.Intra.SharedApp.Views
 			base.OnAppearing ();
 			plotview.Model = null;
 
-			TargetUser = (TargetUser == null) ? App.API.Login : TargetUser;
+			TargetUser = TargetUser ?? App.API.Login;
 			if (TargetUser != null) {
 				InitIntraPage (typeof(Profile), App.API.GetUser, new TimeSpan (1, 0, 0), TargetUser);
 				await RefreshData (false, TargetUser);

@@ -26,8 +26,6 @@ namespace Epitech.Intra.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.InsightsCore.Resource.String.ApplicationName = global::Epitech.Intra.Droid.Resource.String.ApplicationName;
-			global::Xamarin.InsightsCore.Resource.String.Hello = global::Epitech.Intra.Droid.Resource.String.Hello;
 			global::OxyPlot.Xamarin.Forms.Platform.Android.Resource.String.library_name = global::Epitech.Intra.Droid.Resource.String.library_name;
 		}
 		
@@ -75,13 +73,16 @@ namespace Epitech.Intra.Droid
 			public const int menuiconsinfo = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int menuiconsnotifications = 2130837513;
+			public const int menuiconsleaderboard = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int menuiconsprofile = 2130837514;
+			public const int menuiconsnotifications = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int menuiconsprojects = 2130837515;
+			public const int menuiconsprofile = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int menuiconsprojects = 2130837516;
 			
 			static Drawable()
 			{
@@ -95,12 +96,6 @@ namespace Epitech.Intra.Droid
 		
 		public partial class String
 		{
-			
-			// aapt resource value: 0x7f030002
-			public const int ApplicationName = 2130903042;
-			
-			// aapt resource value: 0x7f030001
-			public const int Hello = 2130903041;
 			
 			// aapt resource value: 0x7f030000
 			public const int library_name = 2130903040;

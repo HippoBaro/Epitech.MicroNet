@@ -74,6 +74,7 @@
     <Compile Include="Models\[Project] Types\Files.cs" />
     <Compile Include="Models\ELearning.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\TrombiFilter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

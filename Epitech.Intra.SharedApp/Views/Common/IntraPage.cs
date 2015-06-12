@@ -80,8 +80,7 @@ namespace Epitech.Intra.SharedApp
 						Content = new LoadingScreen ();
 					await SilentUpdate (dat);
 					DisplayContent (Data);
-				} else
-					DisplayContent (Data);
+				}
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}
@@ -97,8 +96,7 @@ namespace Epitech.Intra.SharedApp
 						Content = new LoadingScreen ();
 					await SilentUpdate (null);
 					DisplayContent (Data);
-				} else
-					DisplayContent (Data);
+				}
 			} catch (Exception ex) {
 				DisplayError (ex);
 			}

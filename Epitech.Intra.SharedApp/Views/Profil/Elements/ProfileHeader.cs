@@ -35,9 +35,14 @@ namespace Epitech.Intra.SharedApp.Views
 				Orientation = StackOrientation.Vertical,
 				VerticalOptions = LayoutOptions.Center,
 				Children = {
-					new Label { Text = user.Title, FontSize = 20, TextColor = Color.White, FontAttributes = FontAttributes.Bold },
 					new Label {
-						Text = ((user.Location == null) ? "" : user.Location + Environment.NewLine) + "Promotion " + user.Promo + Environment.NewLine + "Semestre " + user.Semester,
+						Text = user.Title,
+						FontSize = 20,
+						TextColor = Color.White,
+						FontAttributes = FontAttributes.Bold
+					},
+					new Label {
+						Text = user.Login + Environment.NewLine + ((user.Location == null) ? "" : user.Location + Environment.NewLine) + "Promotion " + user.Promo + Environment.NewLine + "Semestre " + user.Semester,
 						HorizontalOptions = LayoutOptions.Start,
 						TextColor = Color.White
 					},

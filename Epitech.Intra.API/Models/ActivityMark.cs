@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Epitech.Intra.API
@@ -53,6 +52,8 @@ namespace Epitech.Intra.API
 
 		[JsonProperty ("members")]
 		public List<object> Members { get; set; }
+
+		public string ItemColor { get; set; }
 	}
 }
 

@@ -105,6 +105,10 @@ namespace Epitech.Intra.SharedApp.Views
 				Image = "menuiconscrowd.png",
 				Description = "Chercher des membres du réseau IONIS"
 			});
+			MenuTabs.Add (new Tab ("Leaderboard", typeof(Leaderboard)) {
+				Image = "menuiconsleaderboard.png",
+				Description = "Je me situe où par rapport aux autres ?"
+			});
 			MenuTabs.Add (new Tab ("E-Learning", typeof(Semester)) {
 				Image = "menuiconselearning.png",
 				Description = "« Mèdeis ageômetrètos eisitô mou tèn stegèn »"
@@ -186,15 +190,15 @@ namespace Epitech.Intra.SharedApp.Views
 			};
 		}
 
-		public IntraPage JumpToPage (Type pageType)
+		public IntraPage JumpToPage<T> ()
 		{
 			foreach (var item in MenuTabs) {
-				if (item.PageType == pageType) {
+				if (item.PageType == typeof(T)) {
 					Detail = new NavigationPage (item.Page);
 					return item.Page;
 				}
 			}
-			return (null);
+			return null;
 		}
 	}
 
